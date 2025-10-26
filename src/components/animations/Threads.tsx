@@ -23,9 +23,9 @@ uniform vec2 uMouse;
 
 #define PI 3.1415926538
 
-const int u_line_count = 40;
-const float u_line_width = 7.0;
-const float u_line_blur = 10.0;
+const int u_line_count = 20;
+const float u_line_width = 5.0;
+const float u_line_blur = 8.0;
 
 float Perlin2D(vec2 P) {
     vec2 Pi = floor(P);
@@ -53,24 +53,19 @@ float pixel(float count, vec2 resolution) {
 }
 
 float lineFn(vec2 st, float width, float perc, float offset, vec2 mouse, float time, float amplitude, float distance) {
-    float split_offset = (perc * 0.4);
+    float split_offset = (perc * 0.3);
     float split_point = 0.1 + split_offset;
 
-    float amplitude_normal = smoothstep(split_point, 0.7, st.x);
-    float amplitude_strength = 0.5;
-    float finalAmplitude = amplitude_normal * amplitude_strength
-                           * amplitude * (1.0 + (mouse.y - 0.5) * 0.2);
+    float amplitude_normal = smoothstep(split_point, 0.6, st.x);
+    float amplitude_strength = 0.3;
+    float finalAmplitude = amplitude_normal * amplitude_strength * amplitude;
 
-    float time_scaled = time / 10.0 + (mouse.x - 0.5) * 1.0;
-    float blur = smoothstep(split_point, split_point + 0.05, st.x) * perc;
+    float time_scaled = time / 15.0;
+    float blur = smoothstep(split_point, split_point + 0.03, st.x) * perc;
 
-    float xnoise = mix(
-        Perlin2D(vec2(time_scaled, st.x + perc) * 2.5),
-        Perlin2D(vec2(time_scaled, st.x + time_scaled) * 3.5) / 1.5,
-        st.x * 0.3
-    );
+    float xnoise = Perlin2D(vec2(time_scaled, st.x + perc) * 2.0);
 
-    float y = 0.5 + (perc - 0.5) * distance + xnoise / 2.0 * finalAmplitude;
+    float y = 0.5 + (perc - 0.5) * distance + xnoise / 3.0 * finalAmplitude;
 
     float line_start = smoothstep(
         y + (width / 2.0) + (u_line_blur * pixel(1.0, iResolution.xy) * blur),
@@ -85,7 +80,7 @@ float lineFn(vec2 st, float width, float perc, float offset, vec2 mouse, float t
     );
 
     return clamp(
-        (line_start - line_end) * (1.0 - smoothstep(0.0, 1.0, pow(perc, 0.3))),
+        (line_start - line_end) * (1.0 - smoothstep(0.0, 1.0, pow(perc, 0.4))),
         0.0,
         1.0
     );
@@ -101,7 +96,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
             uv,
             u_line_width * pixel(1.0, iResolution.xy) * (1.0 - p),
             p,
-            (PI * 1.0) * p,
+            (PI * 0.8) * p,
             uMouse,
             iTime,
             uAmplitude,
@@ -110,7 +105,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     }
 
     float colorVal = 1.0 - line_strength;
-    fragColor = vec4(uColor * colorVal, colorVal);
+    fragColor = vec4(uColor * colorVal, colorVal * 0.6);
 }
 
 void main() {
@@ -204,7 +199,7 @@ const Threads: React.FC<ThreadsProps> = ({
         program.uniforms.uMouse.value[0] = 0.5;
         program.uniforms.uMouse.value[1] = 0.5;
       }
-      program.uniforms.iTime.value = t * 0.001;
+      program.uniforms.iTime.value = t * 0.0008;
 
       renderer.render({ scene: mesh });
       animationFrameId.current = requestAnimationFrame(update);

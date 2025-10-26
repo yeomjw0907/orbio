@@ -1,19 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { brandValues, mockProducts } from '../../data';
-import { useMouseFollow } from '../../hooks/useInteractions';
 import { GradientBackground } from '../../components/background/BackgroundAnimations';
 import { AnimatedText, GradientText, TypewriterText } from '../../components/animations/AnimatedText';
 import { FeatureCard, ProductCard } from '../../components/cards/AnimatedCards';
 import Threads from '../../components/animations/Threads';
 
 export const HomePage: React.FC = () => {
-  const mousePosition = useMouseFollow();
-  
-  // 마우스 팔로우 효과를 위한 플로팅 요소들
-  const floatingElements = useRef<HTMLDivElement[]>([]);
-
   useEffect(() => {
     // 스크롤에 따른 헤더 투명도 조절
     const handleScroll = () => {
@@ -29,18 +23,6 @@ export const HomePage: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 마우스 팔로우 효과
-  useEffect(() => {
-    floatingElements.current.forEach((element, index) => {
-      if (element) {
-        const speed = (index + 1) * 0.02;
-        const x = (mousePosition.x - window.innerWidth / 2) * speed;
-        const y = (mousePosition.y - window.innerHeight / 2) * speed;
-        element.style.transform = `translate(${x}px, ${y}px)`;
-      }
-    });
-  }, [mousePosition]);
-
   return (
     <GradientBackground>
       {/* Hero Section - ORBIO 스타일 with Water Animation */}
@@ -49,10 +31,10 @@ export const HomePage: React.FC = () => {
         <div className="absolute inset-0 z-0">
           <Threads
             color={[0.1, 0.5, 0.6]} // ORBIO Blue 색상
-            amplitude={1.2}
-            distance={0.1}
-            enableMouseInteraction={true}
-            className="w-full h-full opacity-30"
+            amplitude={0.8}
+            distance={0.05}
+            enableMouseInteraction={false}
+            className="w-full h-full opacity-20"
           />
         </div>
         

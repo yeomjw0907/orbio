@@ -6,7 +6,7 @@ import {
   faRecycle, 
   faDroplet, 
   faSeedling,
-  faSparkles
+  faStar
 } from '@fortawesome/free-solid-svg-icons';
 
 interface FloatingElementProps {
@@ -26,9 +26,9 @@ export const FloatingElement: React.FC<FloatingElementProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ 
-        opacity: [0, 1, 0.8, 1],
-        y: [20, -10, 10, -5, 0],
-        rotate: [0, 5, -5, 0]
+        opacity: [0, 0.6, 0.8, 0.6, 0],
+        y: [20, -5, 5, -2, 0],
+        rotate: [0, 2, -2, 0]
       }}
       transition={{
         duration: duration,
@@ -46,11 +46,11 @@ export const FloatingElement: React.FC<FloatingElementProps> = ({
 
 export const FloatingElements: React.FC = () => {
   const elements = [
-    { icon: faSeedling, delay: 0, size: 'w-16 h-16', position: 'top-20 left-10', color: 'text-green-600' },
-    { icon: faRecycle, delay: 1, size: 'w-20 h-20', position: 'bottom-20 right-10', color: 'text-blue-600' },
-    { icon: faDroplet, delay: 2, size: 'w-12 h-12', position: 'top-1/2 left-1/4', color: 'text-cyan-600' },
-    { icon: faLeaf, delay: 0.5, size: 'w-14 h-14', position: 'bottom-1/3 right-1/4', color: 'text-emerald-600' },
-    { icon: faSparkles, delay: 1.5, size: 'w-10 h-10', position: 'top-1/3 right-1/3', color: 'text-yellow-600' },
+    { icon: faSeedling, delay: 0, size: 'w-12 h-12', position: 'top-20 left-10', color: 'text-green-500' },
+    { icon: faRecycle, delay: 1, size: 'w-16 h-16', position: 'bottom-20 right-10', color: 'text-blue-500' },
+    { icon: faDroplet, delay: 2, size: 'w-10 h-10', position: 'top-1/2 left-1/4', color: 'text-cyan-500' },
+    { icon: faLeaf, delay: 0.5, size: 'w-12 h-12', position: 'bottom-1/3 right-1/4', color: 'text-emerald-500' },
+    { icon: faStar, delay: 1.5, size: 'w-8 h-8', position: 'top-1/3 right-1/3', color: 'text-yellow-500' },
   ];
 
   return (
@@ -59,10 +59,10 @@ export const FloatingElements: React.FC = () => {
         <FloatingElement
           key={index}
           delay={element.delay}
-          duration={4 + index * 0.5}
-          className={`absolute ${element.position} ${element.size} orbio-glass rounded-full flex items-center justify-center`}
+          duration={6 + index * 0.5}
+          className={`absolute ${element.position} ${element.size} bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center`}
         >
-          <FontAwesomeIcon icon={element.icon} className={`text-2xl ${element.color}`} />
+          <FontAwesomeIcon icon={element.icon} className={`text-lg ${element.color}`} />
         </FloatingElement>
       ))}
     </div>

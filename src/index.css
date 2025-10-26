@@ -41,10 +41,22 @@
     font-display: swap;
   }
 
-  /* 한글 폰트 렌더링 최적화 */
+  /* 애니메이션 성능 최적화 */
   * {
     font-variant-ligatures: common-ligatures;
     font-kerning: auto;
+    will-change: auto;
+  }
+
+  /* GPU 가속 활성화 */
+  .orbio-card,
+  .orbio-glass,
+  .orbio-button,
+  .orbio-button-secondary,
+  .orbio-button-green {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
   }
 
   /* 폰트 로딩 최적화 */
