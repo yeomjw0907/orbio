@@ -131,7 +131,10 @@ export const HomePage: React.FC = () => {
                       className="w-32 h-32 object-cover rounded-lg shadow-lg"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
-                        e.currentTarget.nextElementSibling.style.display = 'flex';
+                        const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
+                        if (nextElement) {
+                          nextElement.style.display = 'flex';
+                        }
                       }}
                     />
                     <div className="w-32 h-32 bg-white/50 rounded-full flex items-center justify-center" style={{display: 'none'}}>

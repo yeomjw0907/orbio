@@ -98,7 +98,10 @@ export const ProductsPage: React.FC = () => {
                       className="w-32 h-32 object-cover rounded-full shadow-lg group-hover:scale-110 transition-transform duration-300"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
-                        e.currentTarget.nextElementSibling.style.display = 'flex';
+                        const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
+                        if (nextElement) {
+                          nextElement.style.display = 'flex';
+                        }
                       }}
                     />
                     <div className="w-32 h-32 bg-white/80 rounded-full flex items-center justify-center text-6xl group-hover:scale-110 transition-transform duration-300" style={{display: 'none'}}>
