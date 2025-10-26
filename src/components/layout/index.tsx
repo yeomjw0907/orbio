@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from './ui';
+import { Button } from '../ui';
 
 interface HeaderProps {
   isAdmin?: boolean;
