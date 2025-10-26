@@ -3,11 +3,11 @@ import { Product, BlogPost } from '../types';
 export const mockProducts: Product[] = [
   {
     id: '1',
-    name: 'ORBIO Easy-Clean 컵',
-    description: '혁신적인 Easy-Clean 기술로 더 이상 어려운 청소는 없습니다. 물만으로도 완벽하게 세척되는 혁신적인 컵입니다.',
+    name: 'ORBIO Easy-Clean 텀블러',
+    description: '혁신적인 Easy-Clean 기술로 더 이상 어려운 청소는 없습니다. 물만으로도 완벽하게 세척되는 혁신적인 텀블러입니다.',
     price: 15000,
     category: 'easy-clean',
-    image: '/images/products/easy-clean-cup.jpg',
+    image: '/images/products/easy-clean-tumbler.jpg',
     features: [
       '물만으로 완벽 세척',
       '99.9% 항균 효과',
@@ -16,8 +16,8 @@ export const mockProducts: Product[] = [
     ],
     specifications: {
       material: 'FDA 승인 실리콘',
-      dimensions: '높이 12cm, 직경 8cm',
-      weight: '150g',
+      dimensions: '높이 20cm, 직경 7cm',
+      weight: '250g',
       certifications: ['FDA', 'CE', 'ISO 9001']
     }
   },
@@ -133,25 +133,25 @@ export const brandValues = [
   {
     title: '위생',
     description: '99.9% 항균 효과로 완벽한 위생을 보장합니다.',
-    icon: '🛡️',
+    icon: '/images/icons/hygiene.svg',
     color: 'from-blue-500 to-blue-600'
   },
   {
     title: '편의',
     description: '물만으로도 완벽하게 세척되는 Easy-Clean 기술.',
-    icon: '✨',
+    icon: '/images/icons/convenience.svg',
     color: 'from-green-500 to-green-600'
   },
   {
     title: '친환경',
     description: '100% 재활용 가능한 소재로 지구를 생각합니다.',
-    icon: '🌱',
+    icon: '/images/icons/eco.svg',
     color: 'from-emerald-500 to-emerald-600'
   },
   {
     title: '신뢰',
     description: 'FDA, CE 등 국제 인증을 받은 품질을 보장합니다.',
-    icon: '🏆',
+    icon: '/images/icons/trust.svg',
     color: 'from-purple-500 to-purple-600'
   }
 ];

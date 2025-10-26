@@ -80,8 +80,8 @@ export const HomePage: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Card glass className="p-8 text-center hover:scale-105 transition-transform duration-300">
-                  <div className={`w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r ${value.color} flex items-center justify-center text-2xl`}>
-                    {value.icon}
+                  <div className={`w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r ${value.color} flex items-center justify-center`}>
+                    <img src={value.icon} alt={value.title} className="w-8 h-8" />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-800 mb-4">
                     {value.title}
@@ -125,7 +125,16 @@ export const HomePage: React.FC = () => {
               >
                 <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
                   <div className="h-64 bg-gradient-to-br from-orbio-blue/20 to-orbio-green/20 flex items-center justify-center">
-                    <div className="w-32 h-32 bg-white/50 rounded-full flex items-center justify-center">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-32 h-32 object-cover rounded-lg shadow-lg"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="w-32 h-32 bg-white/50 rounded-full flex items-center justify-center" style={{display: 'none'}}>
                       <span className="text-4xl">🍽️</span>
                     </div>
                   </div>

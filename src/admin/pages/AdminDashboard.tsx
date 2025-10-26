@@ -36,28 +36,28 @@ export const AdminDashboard: React.FC = () => {
       value: analytics.totalVisitors.toLocaleString(),
       change: '+12%',
       changeType: 'positive',
-      icon: '👥'
+      icon: '/images/icons/visitors.svg'
     },
     {
       title: '페이지뷰',
       value: analytics.pageViews.toLocaleString(),
       change: '+8%',
       changeType: 'positive',
-      icon: '📄'
+      icon: '/images/icons/pageviews.svg'
     },
     {
       title: '평균 체류시간',
       value: `${Math.floor(analytics.averageSessionDuration / 60)}분 ${analytics.averageSessionDuration % 60}초`,
       change: '+5%',
       changeType: 'positive',
-      icon: '⏱️'
+      icon: '/images/icons/time.svg'
     },
     {
       title: '전환율',
       value: '3.2%',
       change: '+2%',
       changeType: 'positive',
-      icon: '📈'
+      icon: '/images/icons/conversion.svg'
     }
   ];
 
@@ -89,7 +89,7 @@ export const AdminDashboard: React.FC = () => {
             <Card glass className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-orbio-blue to-orbio-green rounded-lg flex items-center justify-center">
-                  <span className="text-2xl">{stat.icon}</span>
+                  <img src={stat.icon} alt={stat.title} className="w-6 h-6" />
                 </div>
                 <span className={`text-sm font-medium ${
                   stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
@@ -195,15 +195,15 @@ export const AdminDashboard: React.FC = () => {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Button variant="outline" className="h-16 flex flex-col items-center justify-center space-y-2">
-              <span className="text-2xl">📝</span>
+              <img src="/images/icons/blog.svg" alt="블로그" className="w-6 h-6" />
               <span>새 블로그 글 작성</span>
             </Button>
             <Button variant="outline" className="h-16 flex flex-col items-center justify-center space-y-2">
-              <span className="text-2xl">📦</span>
+              <img src="/images/icons/orders.svg" alt="주문" className="w-6 h-6" />
               <span>주문 관리</span>
             </Button>
             <Button variant="outline" className="h-16 flex flex-col items-center justify-center space-y-2">
-              <span className="text-2xl">📊</span>
+              <img src="/images/icons/analytics.svg" alt="분석" className="w-6 h-6" />
               <span>상세 분석 보기</span>
             </Button>
           </div>

@@ -28,10 +28,10 @@ export const ProductsPage: React.FC = () => {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'easy-clean': return '✨';
-      case 'antimicrobial': return '🛡️';
-      case 'eco': return '🌱';
-      default: return '🍽️';
+      case 'easy-clean': return '/images/icons/easy-clean.svg';
+      case 'antimicrobial': return '/images/icons/antimicrobial.svg';
+      case 'eco': return '/images/icons/eco.svg';
+      default: return '/images/icons/product.svg';
     }
   };
 
@@ -92,8 +92,17 @@ export const ProductsPage: React.FC = () => {
                 <div className="relative h-64 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-orbio-blue/10 to-orbio-green/10"></div>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-32 h-32 bg-white/80 rounded-full flex items-center justify-center text-6xl group-hover:scale-110 transition-transform duration-300">
-                      {getCategoryIcon(product.category)}
+                    <img 
+                      src={getCategoryIcon(product.category)} 
+                      alt={product.category}
+                      className="w-32 h-32 object-cover rounded-full shadow-lg group-hover:scale-110 transition-transform duration-300"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="w-32 h-32 bg-white/80 rounded-full flex items-center justify-center text-6xl group-hover:scale-110 transition-transform duration-300" style={{display: 'none'}}>
+                      🍽️
                     </div>
                   </div>
                   <div className="absolute top-4 left-4">
@@ -178,21 +187,21 @@ export const ProductsPage: React.FC = () => {
                 description: '물만으로 완벽 세척',
                 features: ['물만으로 세척', '세제 불필요', '시간 절약', '환경 친화적'],
                 color: 'from-blue-500 to-blue-600',
-                icon: '✨'
+                icon: '/images/icons/easy-clean.svg'
               },
               {
                 name: 'Antimicrobial',
                 description: '99.9% 항균 효과',
                 features: ['항균 코팅', '세균 번식 차단', '위생 보장', '안전성'],
                 color: 'from-green-500 to-green-600',
-                icon: '🛡️'
+                icon: '/images/icons/antimicrobial.svg'
               },
               {
                 name: 'Eco',
                 description: '100% 재활용 가능',
                 features: ['재활용 소재', '자연 분해', '화학물질 무첨가', '지속가능성'],
                 color: 'from-emerald-500 to-emerald-600',
-                icon: '🌱'
+                icon: '/images/icons/eco.svg'
               }
             ].map((tech, index) => (
               <motion.div
@@ -203,8 +212,8 @@ export const ProductsPage: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Card glass className="p-8 text-center h-full">
-                  <div className={`w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r ${tech.color} flex items-center justify-center text-3xl`}>
-                    {tech.icon}
+                  <div className={`w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r ${tech.color} flex items-center justify-center`}>
+                    <img src={tech.icon} alt={tech.name} className="w-10 h-10" />
                   </div>
                   <h3 className="text-2xl font-semibold text-gray-800 mb-2">
                     {tech.name}
