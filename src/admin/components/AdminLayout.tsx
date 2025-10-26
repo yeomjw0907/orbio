@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '../../store';
 import { Button } from '../../components/ui';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faTachometerAlt, 
+  faShoppingCart, 
+  faBlog, 
+  faUsers, 
+  faBoxes,
+  faSignOutAlt
+} from '@fortawesome/free-solid-svg-icons';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -12,11 +21,11 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const { user, logout } = useAuthStore();
 
   const navigation = [
-    { name: '대시보드', href: '/admin', icon: '/images/icons/dashboard.svg' },
-    { name: '주문 관리', href: '/admin/orders', icon: '/images/icons/orders.svg' },
-    { name: '블로그 관리', href: '/admin/blog', icon: '/images/icons/blog.svg' },
-    { name: '회원 관리', href: '/admin/users', icon: '/images/icons/users.svg' },
-    { name: '재고 관리', href: '/admin/inventory', icon: '/images/icons/inventory.svg' },
+    { name: '대시보드', href: '/admin', icon: faTachometerAlt },
+    { name: '주문 관리', href: '/admin/orders', icon: faShoppingCart },
+    { name: '블로그 관리', href: '/admin/blog', icon: faBlog },
+    { name: '회원 관리', href: '/admin/users', icon: faUsers },
+    { name: '재고 관리', href: '/admin/inventory', icon: faBoxes },
   ];
 
   return (
@@ -64,7 +73,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                 href={item.href}
                 className="group flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200"
               >
-                <img src={item.icon} alt={item.name} className="mr-3 w-5 h-5" />
+                <FontAwesomeIcon icon={item.icon} className="mr-3 w-5 h-5 text-gray-500" />
                 {item.name}
               </a>
             ))}
@@ -94,6 +103,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             onClick={logout}
             className="w-full"
           >
+            <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
             로그아웃
           </Button>
         </div>
