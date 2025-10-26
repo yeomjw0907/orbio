@@ -55,7 +55,7 @@ export const BrandPage: React.FC = () => {
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-orbio-blue to-orbio-green rounded-full flex items-center justify-center">
-                      <span className="text-white text-xl">🎯</span>
+                      <img src="/images/icons/innovation.svg" alt="혁신" className="w-6 h-6" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800">혁신</h3>
@@ -64,7 +64,7 @@ export const BrandPage: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-orbio-green to-orbio-gray rounded-full flex items-center justify-center">
-                      <span className="text-white text-xl">🌱</span>
+                      <img src="/images/icons/sustainability.svg" alt="지속가능성" className="w-6 h-6" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800">지속가능성</h3>
@@ -73,7 +73,7 @@ export const BrandPage: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-orbio-gray to-orbio-blue rounded-full flex items-center justify-center">
-                      <span className="text-white text-xl">🤝</span>
+                      <img src="/images/icons/trust.svg" alt="신뢰" className="w-6 h-6" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800">신뢰</h3>

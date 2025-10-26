@@ -73,7 +73,7 @@ export const BlogPage: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="h-64 lg:h-auto bg-gradient-to-br from-orbio-blue/20 to-orbio-green/20 flex items-center justify-center">
                   <div className="w-32 h-32 bg-white/50 rounded-full flex items-center justify-center">
-                    <span className="text-6xl">📝</span>
+                    <img src="/images/icons/blog.svg" alt="블로그" className="w-16 h-16" />
                   </div>
                 </div>
                 <div className="p-8 flex flex-col justify-center">
@@ -125,7 +125,7 @@ export const BlogPage: React.FC = () => {
                 {/* Post Image */}
                 <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                   <div className="w-20 h-20 bg-white/80 rounded-full flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
-                    📝
+                    <img src="/images/icons/search.svg" alt="검색" className="w-5 h-5" />
                   </div>
                 </div>
 

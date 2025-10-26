@@ -86,7 +86,7 @@ export const BlogPostPage: React.FC = () => {
           <div className="mb-12">
             <div className="h-64 md:h-96 bg-gradient-to-br from-orbio-blue/20 to-orbio-green/20 rounded-xl flex items-center justify-center">
               <div className="w-32 h-32 bg-white/50 rounded-full flex items-center justify-center">
-                <span className="text-6xl">📝</span>
+                <img src="/images/icons/blog.svg" alt="블로그" className="w-16 h-16" />
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@ export const BlogPostPage: React.FC = () => {
                   <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     <div className="h-32 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                       <div className="w-16 h-16 bg-white/80 rounded-full flex items-center justify-center text-2xl">
-                        📝
+                        <img src="/images/icons/blog.svg" alt="블로그" className="w-5 h-5" />
                       </div>
                     </div>
                     <div className="p-4">

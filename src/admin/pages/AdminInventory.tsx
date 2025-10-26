@@ -59,10 +59,10 @@ export const AdminInventory: React.FC = () => {
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {[
-          { title: '총 제품 수', value: inventory.length, icon: '📦' },
-          { title: '재고 충분', value: inventory.filter(item => item.status === 'in-stock').length, icon: '✅' },
-          { title: '재고 부족', value: inventory.filter(item => item.status === 'low-stock').length, icon: '⚠️' },
-          { title: '품절', value: inventory.filter(item => item.status === 'out-of-stock').length, icon: '❌' }
+          { title: '총 제품 수', value: inventory.length, icon: '/images/icons/products.svg' },
+          { title: '재고 충분', value: inventory.filter(item => item.status === 'in-stock').length, icon: '/images/icons/in-stock.svg' },
+          { title: '재고 부족', value: inventory.filter(item => item.status === 'low-stock').length, icon: '/images/icons/low-stock.svg' },
+          { title: '품절', value: inventory.filter(item => item.status === 'out-of-stock').length, icon: '/images/icons/out-of-stock.svg' }
         ].map((stat, index) => (
           <motion.div
             key={stat.title}
@@ -81,7 +81,7 @@ export const AdminInventory: React.FC = () => {
                   </div>
                 </div>
                 <div className="w-12 h-12 bg-gradient-to-r from-orbio-blue to-orbio-green rounded-lg flex items-center justify-center">
-                  <span className="text-2xl">{stat.icon}</span>
+                  <img src={stat.icon} alt={stat.title} className="w-6 h-6" />
                 </div>
               </div>
             </Card>
@@ -99,7 +99,7 @@ export const AdminInventory: React.FC = () => {
           <Card glass className="p-6 border-l-4 border-yellow-400">
             <div className="flex items-center">
               <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
-                <span className="text-yellow-600">⚠️</span>
+                <img src="/images/icons/warning.svg" alt="경고" className="w-4 h-4" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-800">
@@ -224,19 +224,19 @@ export const AdminInventory: React.FC = () => {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Button variant="outline" className="h-16 flex flex-col items-center justify-center space-y-2">
-              <span className="text-2xl">📥</span>
+              <img src="/images/icons/inbound.svg" alt="입고" className="w-6 h-6" />
               <span>입고 등록</span>
             </Button>
             <Button variant="outline" className="h-16 flex flex-col items-center justify-center space-y-2">
-              <span className="text-2xl">📤</span>
+              <img src="/images/icons/outbound.svg" alt="출고" className="w-6 h-6" />
               <span>출고 등록</span>
             </Button>
             <Button variant="outline" className="h-16 flex flex-col items-center justify-center space-y-2">
-              <span className="text-2xl">📊</span>
+              <img src="/images/icons/analytics.svg" alt="분석" className="w-6 h-6" />
               <span>재고 분석</span>
             </Button>
             <Button variant="outline" className="h-16 flex flex-col items-center justify-center space-y-2">
-              <span className="text-2xl">📋</span>
+              <img src="/images/icons/export.svg" alt="내보내기" className="w-6 h-6" />
               <span>재고 리포트</span>
             </Button>
           </div>

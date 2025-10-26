@@ -74,10 +74,10 @@ export const AdminUsers: React.FC = () => {
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {[
-          { title: '총 회원 수', value: users.length, icon: '👥' },
-          { title: '일반 회원', value: users.filter(u => u.role === 'user').length, icon: '👤' },
-          { title: '기업 회원', value: users.filter(u => u.role === 'enterprise').length, icon: '🏢' },
-          { title: '관리자', value: users.filter(u => u.role === 'admin').length, icon: '👑' }
+          { title: '총 회원 수', value: users.length, icon: '/images/icons/users.svg' },
+          { title: '일반 회원', value: users.filter(u => u.role === 'user').length, icon: '/images/icons/user.svg' },
+          { title: '기업 회원', value: users.filter(u => u.role === 'enterprise').length, icon: '/images/icons/enterprise.svg' },
+          { title: '관리자', value: users.filter(u => u.role === 'admin').length, icon: '/images/icons/admin.svg' }
         ].map((stat, index) => (
           <motion.div
             key={stat.title}
@@ -96,7 +96,7 @@ export const AdminUsers: React.FC = () => {
                   </div>
                 </div>
                 <div className="w-12 h-12 bg-gradient-to-r from-orbio-blue to-orbio-green rounded-lg flex items-center justify-center">
-                  <span className="text-2xl">{stat.icon}</span>
+                  <img src={stat.icon} alt={stat.title} className="w-6 h-6" />
                 </div>
               </div>
             </Card>
@@ -210,15 +210,15 @@ export const AdminUsers: React.FC = () => {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Button variant="outline" className="h-16 flex flex-col items-center justify-center space-y-2">
-              <span className="text-2xl">📧</span>
+              <img src="/images/icons/email.svg" alt="이메일" className="w-6 h-6" />
               <span>이메일 발송</span>
             </Button>
             <Button variant="outline" className="h-16 flex flex-col items-center justify-center space-y-2">
-              <span className="text-2xl">📊</span>
+              <img src="/images/icons/analytics.svg" alt="분석" className="w-6 h-6" />
               <span>회원 분석</span>
             </Button>
             <Button variant="outline" className="h-16 flex flex-col items-center justify-center space-y-2">
-              <span className="text-2xl">📋</span>
+              <img src="/images/icons/export.svg" alt="내보내기" className="w-6 h-6" />
               <span>회원 내보내기</span>
             </Button>
           </div>
