@@ -3,62 +3,65 @@ import { Product, BlogPost } from '../types';
 export const mockProducts: Product[] = [
   {
     id: '1',
-    name: 'ORBIO Easy-Clean 텀블러',
-    description: '혁신적인 Easy-Clean 기술로 더 이상 어려운 청소는 없습니다. 물만으로도 완벽하게 세척되는 혁신적인 텀블러입니다.',
-    price: 15000,
+    name: 'ORBIO Easy-Clean 텀블러 350ml',
+    description: '혁신적인 Easy-Clean 기술로 더 이상 어려운 청소는 없습니다. 물만으로도 완벽하게 세척되는 혁신적인 텀블러입니다. 컴팩트한 사이즈로 언제 어디서나 편리하게 사용하세요.',
+    price: 25000,
     category: 'easy-clean',
-    image: '/images/products/easy-clean-tumbler.jpg',
+    image: '/images/products/tumbler-350ml.jpg',
     features: [
       '물만으로 완벽 세척',
       '99.9% 항균 효과',
       '친환경 소재',
-      '내구성 우수'
+      '컴팩트한 사이즈'
     ],
     specifications: {
       material: 'FDA 승인 실리콘',
-      dimensions: '높이 20cm, 직경 7cm',
-      weight: '250g',
+      dimensions: '높이 18cm, 직경 6.5cm',
+      weight: '200g',
+      capacity: '350ml',
       certifications: ['FDA', 'CE', 'ISO 9001']
     }
   },
   {
     id: '2',
-    name: 'ORBIO Antimicrobial 플레이트',
-    description: '항균 코팅 기술로 세균 번식을 원천 차단하는 혁신적인 플레이트입니다.',
-    price: 25000,
-    category: 'antimicrobial',
-    image: '/images/products/antimicrobial-plate.jpg',
+    name: 'ORBIO Easy-Clean 텀블러 500ml',
+    description: '혁신적인 Easy-Clean 기술로 더 이상 어려운 청소는 없습니다. 물만으로도 완벽하게 세척되는 혁신적인 텀블러입니다. 적당한 용량으로 일상생활에 최적화되었습니다.',
+    price: 30000,
+    category: 'easy-clean',
+    image: '/images/products/tumbler-500ml.jpg',
     features: [
-      '항균 코팅 기술',
-      '미세먼지 차단',
-      '열전도성 우수',
-      'Dishwasher Safe'
+      '물만으로 완벽 세척',
+      '99.9% 항균 효과',
+      '친환경 소재',
+      '일상생활 최적화'
     ],
     specifications: {
-      material: '항균 코팅 세라믹',
-      dimensions: '25cm x 25cm',
-      weight: '300g',
-      certifications: ['FDA', 'CE', 'ISO 14001']
+      material: 'FDA 승인 실리콘',
+      dimensions: '높이 22cm, 직경 7cm',
+      weight: '280g',
+      capacity: '500ml',
+      certifications: ['FDA', 'CE', 'ISO 9001']
     }
   },
   {
     id: '3',
-    name: 'ORBIO Eco 보울 세트',
-    description: '100% 재활용 가능한 친환경 소재로 제작된 보울 세트입니다.',
+    name: 'ORBIO Easy-Clean 텀블러 750ml',
+    description: '혁신적인 Easy-Clean 기술로 더 이상 어려운 청소는 없습니다. 물만으로도 완벽하게 세척되는 혁신적인 텀블러입니다. 대용량으로 하루 종일 충분한 수분 섭취가 가능합니다.',
     price: 35000,
-    category: 'eco',
-    image: '/images/products/eco-bowl-set.jpg',
+    category: 'easy-clean',
+    image: '/images/products/tumbler-750ml.jpg',
     features: [
-      '100% 재활용 가능',
-      '자연 분해',
-      '화학물질 무첨가',
-      '내열성 우수'
+      '물만으로 완벽 세척',
+      '99.9% 항균 효과',
+      '친환경 소재',
+      '대용량 디자인'
     ],
     specifications: {
-      material: 'PLA 바이오 플라스틱',
-      dimensions: '다양한 사이즈 (S, M, L)',
-      weight: '200g (M 사이즈 기준)',
-      certifications: ['FDA', 'CE', 'ASTM D6400']
+      material: 'FDA 승인 실리콘',
+      dimensions: '높이 26cm, 직경 7.5cm',
+      weight: '350g',
+      capacity: '750ml',
+      certifications: ['FDA', 'CE', 'ISO 9001']
     }
   }
 ];
@@ -133,25 +136,25 @@ export const brandValues = [
   {
     title: '위생',
     description: '99.9% 항균 효과로 완벽한 위생을 보장합니다.',
-    icon: '/images/icons/hygiene.svg',
+    icon: 'shield-virus',
     color: 'from-blue-500 to-blue-600'
   },
   {
     title: '편의',
     description: '물만으로도 완벽하게 세척되는 Easy-Clean 기술.',
-    icon: '/images/icons/convenience.svg',
+    icon: 'droplet',
     color: 'from-green-500 to-green-600'
   },
   {
     title: '친환경',
     description: '100% 재활용 가능한 소재로 지구를 생각합니다.',
-    icon: '/images/icons/eco.svg',
+    icon: 'leaf',
     color: 'from-emerald-500 to-emerald-600'
   },
   {
     title: '신뢰',
     description: 'FDA, CE 등 국제 인증을 받은 품질을 보장합니다.',
-    icon: '/images/icons/trust.svg',
+    icon: 'certificate',
     color: 'from-purple-500 to-purple-600'
   }
 ];

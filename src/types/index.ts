@@ -20,6 +20,7 @@ export interface Product {
     material: string;
     dimensions: string;
     weight: string;
+    capacity?: string;
     certifications: string[];
   };
 }

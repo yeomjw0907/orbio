@@ -20,19 +20,19 @@ export const AdminLogin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orbio-blue/20 via-orbio-green/20 to-orbio-gray/20">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orbio-gray-50 via-orbio-blue-50 to-orbio-green-50">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-        <Card glass className="p-8">
+        <Card className="orbio-card p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-orbio-blue to-orbio-green rounded-xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-br from-orbio-blue-500 to-orbio-green-500 rounded-xl flex items-center justify-center mx-auto mb-4">
               <span className="text-white font-bold text-2xl">O</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-800 mb-2">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
               ORBIO 관리자
             </h1>
             <p className="text-gray-600">
@@ -50,7 +50,7 @@ export const AdminLogin: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orbio-blue focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orbio-blue-500 focus:border-transparent transition-colors"
                 placeholder="admin@orbio.com"
               />
             </div>
@@ -64,7 +64,7 @@ export const AdminLogin: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orbio-blue focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orbio-blue-500 focus:border-transparent transition-colors"
                 placeholder="비밀번호를 입력하세요"
               />
             </div>
@@ -78,17 +78,48 @@ export const AdminLogin: React.FC = () => {
             <Button
               type="submit"
               size="lg"
-              className="w-full"
+              className="w-full orbio-button"
               disabled={isLoading}
             >
               {isLoading ? '로그인 중...' : '로그인'}
             </Button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-500">
-            <p>테스트 계정:</p>
-            <p>이메일: admin@orbio.com</p>
-            <p>비밀번호: admin123</p>
+          <div className="mt-8 p-6 bg-orbio-blue-50 rounded-xl border border-orbio-blue-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
+              🔐 관리자 접근 방법
+            </h3>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-center space-x-2">
+                <span className="text-orbio-blue-600">1️⃣</span>
+                <span className="text-gray-700">URL에 <code className="bg-gray-200 px-2 py-1 rounded">/admin</code> 추가</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-orbio-blue-600">2️⃣</span>
+                <span className="text-gray-700">아래 테스트 계정으로 로그인</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-orbio-blue-600">3️⃣</span>
+                <span className="text-gray-700">관리자 대시보드 접근</span>
+              </div>
+            </div>
+            
+            <div className="mt-4 p-4 bg-white rounded-lg border border-orbio-blue-300">
+              <p className="font-semibold text-gray-900 mb-2">테스트 계정:</p>
+              <div className="space-y-1 text-sm">
+                <p><span className="font-medium">이메일:</span> admin@orbio.com</p>
+                <p><span className="font-medium">비밀번호:</span> admin123</p>
+              </div>
+            </div>
+            
+            <div className="mt-4 text-center">
+              <a 
+                href="/admin" 
+                className="inline-block orbio-button-secondary px-4 py-2 text-sm font-semibold"
+              >
+                관리자 페이지로 이동
+              </a>
+            </div>
           </div>
         </Card>
       </motion.div>
