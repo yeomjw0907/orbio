@@ -5,7 +5,8 @@ import {
   faShieldVirus, 
   faDroplet, 
   faLeaf, 
-  faCertificate 
+  faCertificate,
+  faCoffee
 } from '@fortawesome/free-solid-svg-icons';
 
 // 아이콘 매핑
@@ -139,7 +140,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           transition={{ duration: 0.3 }}
           className="w-32 h-32 bg-white/80 rounded-full flex items-center justify-center shadow-lg"
         >
-          <span className="text-6xl">🥤</span>
+          <FontAwesomeIcon icon={faCoffee} className="text-6xl text-orbio-blue-600" />
         </motion.div>
         <div className="absolute top-4 right-4 bg-orbio-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
           {product.specifications.capacity}

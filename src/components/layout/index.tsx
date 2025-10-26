@@ -124,7 +124,7 @@ export const Footer: React.FC<FooterProps> = ({ isAdmin = false }) => {
               <span className="text-2xl font-black orbio-text-gradient">ORBIO</span>
             </div>
             <p className="text-gray-600 mb-4">
-              🌱 The Circle of Clean - 친환경 세척 기술로 더 깨끗한 지구를 만들어갑니다.
+              The Circle of Clean - 친환경 세척 기술로 더 깨끗한 지구를 만들어갑니다.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-500 hover:text-orbio-blue-600 transition-colors">

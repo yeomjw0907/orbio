@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, Button, Input, Textarea } from '../../components/ui';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faEnvelope, 
+  faPhone, 
+  faMapMarkerAlt 
+} from '@fortawesome/free-solid-svg-icons';
 
 export const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -206,7 +212,7 @@ export const ContactPage: React.FC = () => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-orbio-blue/20 rounded-full flex items-center justify-center">
-                    <span className="text-orbio-blue">📧</span>
+                    <FontAwesomeIcon icon={faEnvelope} className="text-orbio-blue" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">이메일</p>
@@ -215,7 +221,7 @@ export const ContactPage: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-orbio-green/20 rounded-full flex items-center justify-center">
-                    <span className="text-orbio-green">📞</span>
+                    <FontAwesomeIcon icon={faPhone} className="text-orbio-green" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">전화</p>
@@ -224,7 +230,7 @@ export const ContactPage: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-orbio-gray/20 rounded-full flex items-center justify-center">
-                    <span className="text-orbio-gray">📍</span>
+                    <FontAwesomeIcon icon={faMapMarkerAlt} className="text-orbio-gray" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">주소</p>

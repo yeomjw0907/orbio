@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, Input, Textarea } from './ui';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faCheckCircle, 
+  faEnvelope, 
+  faPhone, 
+  faMapMarkerAlt,
+  faCommentDots
+} from '@fortawesome/free-solid-svg-icons';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -110,7 +118,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                   className="text-center py-12"
                 >
                   <div className="w-20 h-20 bg-eco-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span className="text-4xl">✅</span>
+                    <FontAwesomeIcon icon={faCheckCircle} className="text-4xl text-green-600" />
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">
                     문의가 접수되었습니다!
@@ -234,7 +242,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                       <div className="space-y-4">
                         <div className="flex items-center space-x-3">
                           <div className="w-10 h-10 bg-eco-green-100 rounded-full flex items-center justify-center">
-                            <span className="text-eco-green-600">📧</span>
+                            <FontAwesomeIcon icon={faEnvelope} className="text-eco-green-600" />
                           </div>
                           <div>
                             <p className="font-medium text-gray-900">이메일</p>
@@ -243,7 +251,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                         </div>
                         <div className="flex items-center space-x-3">
                           <div className="w-10 h-10 bg-eco-mint-100 rounded-full flex items-center justify-center">
-                            <span className="text-eco-mint-600">📞</span>
+                            <FontAwesomeIcon icon={faPhone} className="text-eco-mint-600" />
                           </div>
                           <div>
                             <p className="font-medium text-gray-900">전화</p>
@@ -252,7 +260,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                         </div>
                         <div className="flex items-center space-x-3">
                           <div className="w-10 h-10 bg-eco-blue-100 rounded-full flex items-center justify-center">
-                            <span className="text-eco-blue-600">📍</span>
+                            <FontAwesomeIcon icon={faMapMarkerAlt} className="text-eco-blue-600" />
                           </div>
                           <div>
                             <p className="font-medium text-gray-900">주소</p>
@@ -290,10 +298,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                       </h3>
                       <div className="space-y-3">
                         <button className="w-full eco-button-secondary py-3 text-center font-semibold">
-                          📞 전화 상담
+                          <FontAwesomeIcon icon={faPhone} className="mr-2" />
+                          전화 상담
                         </button>
                         <button className="w-full eco-button-mint py-3 text-center font-semibold">
-                          💬 카카오톡 상담
+                          <FontAwesomeIcon icon={faCommentDots} className="mr-2" />
+                          카카오톡 상담
                         </button>
                       </div>
                     </div>

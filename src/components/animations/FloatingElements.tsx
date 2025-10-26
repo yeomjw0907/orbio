@@ -1,5 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faLeaf, 
+  faRecycle, 
+  faDroplet, 
+  faSeedling,
+  faSparkles
+} from '@fortawesome/free-solid-svg-icons';
 
 interface FloatingElementProps {
   children: React.ReactNode;
@@ -38,11 +46,11 @@ export const FloatingElement: React.FC<FloatingElementProps> = ({
 
 export const FloatingElements: React.FC = () => {
   const elements = [
-    { emoji: '🌱', delay: 0, size: 'w-16 h-16', position: 'top-20 left-10' },
-    { emoji: '♻️', delay: 1, size: 'w-20 h-20', position: 'bottom-20 right-10' },
-    { emoji: '💧', delay: 2, size: 'w-12 h-12', position: 'top-1/2 left-1/4' },
-    { emoji: '🌿', delay: 0.5, size: 'w-14 h-14', position: 'bottom-1/3 right-1/4' },
-    { emoji: '✨', delay: 1.5, size: 'w-10 h-10', position: 'top-1/3 right-1/3' },
+    { icon: faSeedling, delay: 0, size: 'w-16 h-16', position: 'top-20 left-10', color: 'text-green-600' },
+    { icon: faRecycle, delay: 1, size: 'w-20 h-20', position: 'bottom-20 right-10', color: 'text-blue-600' },
+    { icon: faDroplet, delay: 2, size: 'w-12 h-12', position: 'top-1/2 left-1/4', color: 'text-cyan-600' },
+    { icon: faLeaf, delay: 0.5, size: 'w-14 h-14', position: 'bottom-1/3 right-1/4', color: 'text-emerald-600' },
+    { icon: faSparkles, delay: 1.5, size: 'w-10 h-10', position: 'top-1/3 right-1/3', color: 'text-yellow-600' },
   ];
 
   return (
@@ -52,9 +60,9 @@ export const FloatingElements: React.FC = () => {
           key={index}
           delay={element.delay}
           duration={4 + index * 0.5}
-          className={`absolute ${element.position} ${element.size} orbio-glass rounded-full flex items-center justify-center text-2xl`}
+          className={`absolute ${element.position} ${element.size} orbio-glass rounded-full flex items-center justify-center`}
         >
-          {element.emoji}
+          <FontAwesomeIcon icon={element.icon} className={`text-2xl ${element.color}`} />
         </FloatingElement>
       ))}
     </div>

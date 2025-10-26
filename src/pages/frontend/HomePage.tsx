@@ -80,7 +80,7 @@ export const HomePage: React.FC = () => {
             {/* 서브타이틀 - 반응형 개선 */}
             <div className="text-lg sm:text-xl md:text-2xl text-gray-700 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed font-medium px-4">
               <TypewriterText 
-                text="🌱 친환경 Easy-Clean 기술로 더 이상 어려운 청소는 없습니다. 물만으로도 완벽하게 세척되는 ORBIO의 혁신적인 제품을 만나보세요."
+                text="친환경 Easy-Clean 기술로 더 이상 어려운 청소는 없습니다. 물만으로도 완벽하게 세척되는 ORBIO의 혁신적인 제품을 만나보세요."
                 speed={30}
                 delay={1}
                 className="block"
