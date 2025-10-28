@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, Button, Input, Textarea } from '../../components/ui';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faEnvelope, 
-  faPhone, 
-  faMapMarkerAlt 
-} from '@fortawesome/free-solid-svg-icons';
 
 export const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -96,13 +90,12 @@ export const ContactPage: React.FC = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="max-w-3xl mx-auto">
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-2"
           >
             <Card glass className="p-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
@@ -188,110 +181,12 @@ export const ContactPage: React.FC = () => {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full"
+                  className="w-full orbio-button"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? '전송 중...' : '문의 보내기'}
                 </Button>
               </form>
-            </Card>
-          </motion.div>
-
-          {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="space-y-8"
-          >
-            {/* Contact Details */}
-            <Card glass className="p-6">
-              <h3 className="text-xl font-semibold text-gray-800 mb-6">
-                연락처 정보
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-orbio-blue/20 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon icon={faEnvelope} className="text-orbio-blue" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-800">이메일</p>
-                    <p className="text-gray-600">contact@orbio.com</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-orbio-green/20 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon icon={faPhone} className="text-orbio-green" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-800">전화</p>
-                    <p className="text-gray-600">02-1234-5678</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-orbio-gray/20 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon icon={faMapMarkerAlt} className="text-orbio-gray" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-800">주소</p>
-                    <p className="text-gray-600">서울시 강남구 테헤란로 123</p>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            {/* Business Hours */}
-            <Card glass className="p-6">
-              <h3 className="text-xl font-semibold text-gray-800 mb-6">
-                운영 시간
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">월요일 - 금요일</span>
-                  <span className="font-medium text-gray-800">09:00 - 18:00</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">토요일</span>
-                  <span className="font-medium text-gray-800">09:00 - 13:00</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">일요일</span>
-                  <span className="font-medium text-gray-800">휴무</span>
-                </div>
-              </div>
-            </Card>
-
-            {/* FAQ */}
-            <Card glass className="p-6">
-              <h3 className="text-xl font-semibold text-gray-800 mb-6">
-                자주 묻는 질문
-              </h3>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium text-gray-800 mb-2">
-                    배송은 얼마나 걸리나요?
-                  </h4>
-                  <p className="text-sm text-gray-600">
-                    일반적으로 주문 후 2-3일 내에 배송됩니다.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-medium text-gray-800 mb-2">
-                    교환/반품이 가능한가요?
-                  </h4>
-                  <p className="text-sm text-gray-600">
-                    제품 수령 후 7일 이내에 교환/반품이 가능합니다.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-medium text-gray-800 mb-2">
-                    대량 주문 할인은 있나요?
-                  </h4>
-                  <p className="text-sm text-gray-600">
-                    대량 주문 시 별도 할인 혜택을 제공합니다.
-                  </p>
-                </div>
-              </div>
             </Card>
           </motion.div>
         </div>

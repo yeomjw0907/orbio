@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Card, Button } from '../../components/ui';
 import { useAuthStore } from '../../store';
 
@@ -8,13 +9,16 @@ export const AdminLogin: React.FC = () => {
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
   const { login, isLoading } = useAuthStore();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     
     const success = await login(email, password);
-    if (!success) {
+    if (success) {
+      navigate('/admin');
+    } else {
       setError('이메일 또는 비밀번호가 올바르지 않습니다.');
     }
   };

@@ -91,16 +91,26 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
   color,
   delay = 0
 }) => {
+  // Map gradient class to icon color
+  const getIconColor = (colorString: string) => {
+    if (colorString.includes('from-blue')) return '#2563eb'; // blue-600
+    if (colorString.includes('from-green')) return '#059669'; // emerald-600
+    if (colorString.includes('from-emerald')) return '#047857'; // emerald-700
+    if (colorString.includes('from-purple')) return '#7c3aed'; // purple-600
+    return '#6b7280'; // gray-500
+  };
+
+  const iconColor = getIconColor(color);
+
   return (
     <AnimatedCard delay={delay} className="p-8 text-center group">
-      <motion.div
-        whileHover={{ rotate: 360 }}
-        transition={{ duration: 0.6 }}
-        className={`w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br ${color} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-300`}
-      >
+      <motion.div className="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
         <FontAwesomeIcon 
           icon={iconMap[icon] || faShieldVirus} 
-          className="text-3xl text-white" 
+          className="text-5xl"
+          style={{
+            color: iconColor
+          }}
         />
       </motion.div>
       <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-orbio-blue-600 transition-colors duration-300">

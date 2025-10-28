@@ -5,26 +5,45 @@ import { brandValues, certifications } from '../../data';
 
 export const BrandPage: React.FC = () => {
   return (
-    <div className="min-h-screen py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Hero Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
-            브랜드 스토리
-          </h1>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-            ORBIO는 "The Circle of Clean"이라는 슬로건 아래, 
-            혁신적인 세척 기술로 더 깨끗하고 지속 가능한 세상을 만들어갑니다.
-          </p>
-        </motion.div>
+    <div className="min-h-screen">
+      {/* Hero Section with Background */}
+      <section className="relative py-32 px-4 overflow-hidden">
+        {/* Background with gradient and pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orbio-blue-50 via-orbio-green-50 to-emerald-50">
+          <div className="absolute inset-0 opacity-10">
+            {/* Water pattern background */}
+            <div className="absolute inset-0" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q25 30, 50 50 T100 50' stroke='%23027A9C' fill='none'/%3E%3Cpath d='M0 80 Q25 60, 50 80 T100 80' stroke='%23027A9C' fill='none'/%3E%3C/svg%3E")`,
+              backgroundSize: '200px 200px'
+            }}></div>
+          </div>
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-800 mb-6">
+              브랜드 스토리
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              ORBIO는 "The Circle of Clean"이라는 슬로건 아래, 
+              무세제 초친수 코팅 기술로 더 깨끗하고 지속 가능한 세상을 만들어갑니다.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         {/* Mission Section */}
-        <section className="mb-20">
+        <section className="mb-20 relative rounded-3xl overflow-hidden">
+          {/* Background for Mission Section */}
+          <div className="absolute inset-0 bg-gradient-to-r from-orbio-blue-100 via-white to-orbio-green-100 opacity-30"></div>
+          <div className="relative p-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -37,12 +56,12 @@ export const BrandPage: React.FC = () => {
               </h2>
               <p className="text-lg text-gray-600 mb-6">
                 ORBIO는 일상생활에서 가장 기본적이면서도 중요한 '청소'라는 행위를 
-                혁신적으로 변화시키고자 합니다. 물만으로도 완벽하게 세척되는 
-                Easy-Clean 기술을 통해 더 편리하고 친환경적인 생활을 제안합니다.
+                혁신적으로 변화시키고자 합니다. 무세제로 완벽하게 세척되는 
+                초친수 코팅 기술을 통해 더 편리하고 친환경적인 생활을 제안합니다.
               </p>
               <p className="text-lg text-gray-600">
-                우리는 단순히 제품을 만드는 것이 아니라, 사람들의 라이프스타일을 
-                개선하고 지구 환경을 보호하는 데 기여하고자 합니다.
+                우리는 단순히 제품을 만드는 것이 아니라, 세제 없이도 깨끗한 생활을 
+                실현하고 지구 환경을 보호하는 데 기여하고자 합니다.
               </p>
             </motion.div>
             <motion.div
@@ -84,10 +103,14 @@ export const BrandPage: React.FC = () => {
               </Card>
             </motion.div>
           </div>
+          </div>
         </section>
 
         {/* Core Values Section */}
-        <section className="mb-20">
+        <section className="mb-20 relative py-16 rounded-3xl overflow-hidden">
+          {/* Background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-orbio-green-50 to-orbio-blue-50"></div>
+          <div className="relative">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -126,10 +149,12 @@ export const BrandPage: React.FC = () => {
               </motion.div>
             ))}
           </div>
+          </div>
         </section>
 
         {/* Certifications Section */}
-        <section className="mb-20">
+        <section className="mb-20 relative py-16 px-8 rounded-3xl overflow-hidden bg-gradient-to-r from-orbio-blue-100 via-purple-50 to-orbio-green-100">
+          <div className="relative">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -168,6 +193,7 @@ export const BrandPage: React.FC = () => {
               </motion.div>
             ))}
           </div>
+          </div>
         </section>
 
         {/* Technology Section */}
@@ -186,15 +212,15 @@ export const BrandPage: React.FC = () => {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-orbio-blue rounded-full"></div>
-                    <span className="text-gray-700">Easy-Clean 기술: 물만으로 완벽 세척</span>
+                    <span className="text-gray-700">초친수 코팅: 무세제로 완벽 세척</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-orbio-green rounded-full"></div>
-                    <span className="text-gray-700">Antimicrobial 코팅: 99.9% 항균 효과</span>
+                    <span className="text-gray-700">항균 코팅: 99.999% 이상 항균력</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-orbio-gray rounded-full"></div>
-                    <span className="text-gray-700">Eco 소재: 100% 재활용 가능</span>
+                    <span className="text-gray-700">높은 표면경도: 스크래치 방지, 세정 용이, 내구성 강화</span>
                   </div>
                 </div>
               </Card>
@@ -214,8 +240,8 @@ export const BrandPage: React.FC = () => {
                 더 나은 제품을 만들기 위해 노력하고 있습니다.
               </p>
               <p className="text-lg text-gray-600">
-                특히 Easy-Clean 기술은 물의 표면장력을 이용한 혁신적인 기술로, 
-                세제 없이도 완벽한 세척을 가능하게 합니다.
+                특히 초친수 코팅 기술은 물이 표면에 완전히 퍼져 자가정화 효과를 제공하는 
+                혁신적인 기술로, 무세제로도 완벽한 세척을 가능하게 합니다.
               </p>
             </motion.div>
           </div>

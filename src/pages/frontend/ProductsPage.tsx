@@ -49,8 +49,8 @@ export const ProductsPage: React.FC = () => {
             제품 라인업
           </h1>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-            혁신적인 기술로 만든 ORBIO의 제품들을 만나보세요. 
-            Easy-Clean, Antimicrobial, Eco 기술이 적용된 다양한 제품을 확인할 수 있습니다.
+            혁신적인 초친수 코팅 기술로 만든 ORBIO의 제품들을 만나보세요. 
+            무세제 세척, 99.999% 이상 항균력, 높은 표면경도를 갖춘 다양한 제품을 확인할 수 있습니다.
           </p>
         </motion.div>
 
@@ -186,23 +186,23 @@ export const ProductsPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                name: 'Easy-Clean',
-                description: '물만으로 완벽 세척',
-                features: ['물만으로 세척', '세제 불필요', '시간 절약', '환경 친화적'],
+                name: '초친수 코팅',
+                description: '무세제로 완벽 세척',
+                features: ['무세제 세척', '초친수 코팅', '표면경도 높음', '세정 용이', '색바램 방지'],
                 color: 'from-blue-500 to-blue-600',
                 icon: '/images/icons/easy-clean.svg'
               },
               {
-                name: 'Antimicrobial',
-                description: '99.9% 항균 효과',
-                features: ['항균 코팅', '세균 번식 차단', '위생 보장', '안전성'],
+                name: '항균 코팅',
+                description: '99.999% 이상 항균력',
+                features: ['99.999% 이상 항균력', '세균 번식 차단', '위생 보장', '안전성', '10배 강력'],
                 color: 'from-green-500 to-green-600',
                 icon: '/images/icons/antimicrobial.svg'
               },
               {
-                name: 'Eco',
-                description: '100% 재활용 가능',
-                features: ['재활용 소재', '자연 분해', '화학물질 무첨가', '지속가능성'],
+                name: '내구성 설계',
+                description: '높은 표면경도',
+                features: ['스크래치 방지', '세정 용이', '내구성 강함', '색바램 없는 표면'],
                 color: 'from-emerald-500 to-emerald-600',
                 icon: '/images/icons/eco.svg'
               }

@@ -2,6 +2,8 @@
 
 ORBIO의 공식 웹사이트와 관리자 대시보드입니다. React + TypeScript + Tailwind CSS로 구축되었습니다.
 
+**🔗 Live Site**: https://orbio.kr
+
 ## 🚀 주요 기능
 
 ### 프론트엔드 (고객용)

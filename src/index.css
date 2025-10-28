@@ -59,28 +59,12 @@
     perspective: 1000px;
   }
 
-  /* 폰트 로딩 최적화 */
-  @font-face {
-    font-family: 'Inter';
-    font-display: swap;
-  }
+  /* 폰트 로딩 최적화 - Inter 폰트는 Google Fonts에서 직접 로드 */
 
-  /* ORBIO 스타일 스크롤바 */
+  /* ORBIO 스타일 스크롤바 숨기기 */
   ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #f8fafc;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #027A9C;
-    border-radius: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #0369a1;
+    width: 0px;
+    background: transparent;
   }
 }
 

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { brandValues, mockProducts } from '../../data';
 import { GradientBackground } from '../../components/background/BackgroundAnimations';
-import { AnimatedText, GradientText, TypewriterText } from '../../components/animations/AnimatedText';
+import { AnimatedText, GradientText } from '../../components/animations/AnimatedText';
 import { FeatureCard, ProductCard } from '../../components/cards/AnimatedCards';
 import Threads from '../../components/animations/Threads';
 
@@ -31,10 +31,10 @@ export const HomePage: React.FC = () => {
         <div className="absolute inset-0 z-0">
           <Threads
             color={[0.1, 0.5, 0.6]} // ORBIO Blue 색상
-            amplitude={0.8}
-            distance={0.05}
+            amplitude={1.5}
+            distance={0.03}
             enableMouseInteraction={false}
-            className="w-full h-full opacity-20"
+            className="w-full h-full opacity-25"
           />
         </div>
         
@@ -47,26 +47,23 @@ export const HomePage: React.FC = () => {
           >
             {/* 메인 타이틀 - 반응형 개선 */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-800 mb-6 sm:mb-8 leading-tight">
-              <AnimatedText 
-                text="The Circle of" 
-                className="block"
-                delay={0.2}
-              />
-              <GradientText 
-                text="Clean" 
-                className="block mt-1 sm:mt-2"
-                gradient="orbio-text-gradient"
-              />
+              <span className="inline-block mr-3">
+                <AnimatedText 
+                  text="The Circle of Clean" 
+                  className="inline"
+                  delay={0.2}
+                />
+              </span>
             </h1>
             
             {/* 서브타이틀 - 반응형 개선 */}
-            <div className="text-lg sm:text-xl md:text-2xl text-gray-700 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed font-medium px-4">
-              <TypewriterText 
-                text="친환경 Easy-Clean 기술로 더 이상 어려운 청소는 없습니다. 물만으로도 완벽하게 세척되는 ORBIO의 혁신적인 제품을 만나보세요."
-                speed={30}
-                delay={1}
-                className="block"
-              />
+            <div className="text-base sm:text-lg md:text-xl text-gray-700 mb-8 sm:mb-12 max-w-5xl mx-auto leading-relaxed px-4">
+              <p className="mb-2">
+                ORBIO는 무세제 초친수 코팅 기술을 적용해, 세제 없이도 위생적이고 안전한 세척 환경을 제공합니다.
+              </p>
+              <p className="text-gray-600">
+                국내외 인증기관에서 검증된 기술력으로, 오직 물만으로도 완벽한 청결을 경험할 수 있습니다.
+              </p>
             </div>
             
             {/* 버튼들 - 반응형 개선 */}
@@ -138,7 +135,7 @@ export const HomePage: React.FC = () => {
                 icon={value.icon}
                 title={value.title}
                 description={value.description}
-                color="from-orbio-blue-400 to-orbio-green-400"
+                color={value.color}
                 delay={index * 0.1}
               />
             ))}
@@ -162,8 +159,8 @@ export const HomePage: React.FC = () => {
                 gradient="orbio-text-gradient"
               />
             </h2>
-            <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto font-medium px-4">
-              Easy-Clean 기술을 적용한 ORBIO의 혁신적인 텀블러를 만나보세요.
+            <p className="text-base sm:text-lg text-gray-700 max-w-4xl mx-auto px-4 leading-relaxed">
+              공인 기관에서 위생성과 친환경성을 모두 인정받은 ORBIO Easy-Clean 텀블러 시리즈를 소개합니다. 세제 없이도 표면의 오염물질을 효과적으로 제거할 수 있어, 건강과 환경 모두를 생각한 신뢰받는 선택입니다.
             </p>
           </motion.div>
           
@@ -205,9 +202,9 @@ export const HomePage: React.FC = () => {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 sm:mb-6">
               지금 ORBIO와 함께하세요
             </h2>
-            <p className="text-lg sm:text-xl text-blue-100 mb-8 sm:mb-10 max-w-3xl mx-auto font-medium px-4">
-              더 깨끗하고 지속 가능한 미래를 위한 여정에 동참하세요. 
-              지금 바로 ORBIO의 혁신적인 친환경 제품들을 만나보세요.
+            <p className="text-base sm:text-lg text-blue-100 mb-8 sm:mb-10 max-w-4xl mx-auto px-4 leading-relaxed">
+              ORBIO와 함께 신뢰할 수 있는 친환경 생활을 시작해보세요. 
+              입증된 기술과 투명한 품질 관리로 여러분의 일상에 안전과 지속가능성을 더합니다.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4">
               <Link to="/register">
