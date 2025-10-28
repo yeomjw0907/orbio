@@ -2,24 +2,41 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button } from '../../components/ui';
-import { useAuthStore } from '../../store';
+import { signInWithEmail } from '../../lib/auth';
+import { supabase } from '../../lib/supabase';
 
 export const AdminLogin: React.FC = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
-  const { login, isLoading } = useAuthStore();
+  const [isLoading, setIsLoading] = React.useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
     
-    const success = await login(email, password);
-    if (success) {
-      navigate('/admin');
-    } else {
-      setError('이메일 또는 비밀번호가 올바르지 않습니다.');
+    try {
+      const user = await signInWithEmail(email, password);
+      if (user) {
+        // 관리자 권한 확인
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+        
+        if (profile?.role === 'admin') {
+          navigate('/admin');
+        } else {
+          setError('관리자 권한이 없습니다.');
+        }
+      }
+    } catch (error: any) {
+      setError(error.message || '로그인에 실패했습니다.');
+    } finally {
+      setIsLoading(false);
     }
   };
 

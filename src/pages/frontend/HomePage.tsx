@@ -1,13 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { brandValues, mockProducts } from '../../data';
+import { brandValues } from '../../data';
+import { fetchProducts } from '../../lib/api';
+import { Tables } from '../../lib/supabase';
 import { GradientBackground } from '../../components/background/BackgroundAnimations';
 import { AnimatedText, GradientText } from '../../components/animations/AnimatedText';
 import { FeatureCard, ProductCard } from '../../components/cards/AnimatedCards';
 import Threads from '../../components/animations/Threads';
 
 export const HomePage: React.FC = () => {
+  const [products, setProducts] = useState<Tables<'products'>[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await fetchProducts();
+        setProducts(data.slice(0, 3)); // 최신 3개 제품만 표시
+      } catch (error) {
+        console.error('제품 로딩 실패:', error);
+        // 에러 시 빈 배열로 설정
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
   useEffect(() => {
     // 스크롤에 따른 헤더 투명도 조절
     const handleScroll = () => {
@@ -165,13 +187,39 @@ export const HomePage: React.FC = () => {
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-            {mockProducts.map((product, index) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                delay={index * 0.1}
-              />
-            ))}
+            {loading ? (
+              // 로딩 상태
+              Array.from({ length: 3 }).map((_, index) => (
+                <div key={index} className="bg-white rounded-2xl shadow-lg p-6 animate-pulse">
+                  <div className="bg-gray-200 h-48 rounded-xl mb-4"></div>
+                  <div className="bg-gray-200 h-6 rounded mb-2"></div>
+                  <div className="bg-gray-200 h-4 rounded mb-4"></div>
+                  <div className="bg-gray-200 h-8 rounded"></div>
+                </div>
+              ))
+            ) : products.length > 0 ? (
+              // Supabase 데이터 사용
+              products.map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={{
+                    id: product.id,
+                    name: product.name,
+                    description: product.description,
+                    price: product.price / 100, // 센트를 원으로 변환
+                    image: product.image || '/images/products/default.jpg',
+                    features: product.features || [],
+                    category: product.category
+                  }}
+                  delay={index * 0.1}
+                />
+              ))
+            ) : (
+              // 데이터가 없을 때 기본 메시지
+              <div className="col-span-full text-center py-12">
+                <p className="text-gray-500 text-lg">제품 정보를 불러오는 중입니다...</p>
+              </div>
+            )}
           </div>
           
           <div className="text-center mt-12 sm:mt-16 orbio-slide-up">

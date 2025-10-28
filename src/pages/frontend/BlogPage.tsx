@@ -1,21 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Card, Button } from '../../components/ui';
-import { mockBlogPosts } from '../../data';
+import { fetchBlogPosts } from '../../lib/api';
+import { Tables } from '../../lib/supabase';
 
 export const BlogPage: React.FC = () => {
   const [selectedTag, setSelectedTag] = useState<string>('all');
+  const [blogPosts, setBlogPosts] = useState<Tables<'blog_posts'>[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadBlogPosts = async () => {
+      try {
+        const data = await fetchBlogPosts();
+        setBlogPosts(data);
+      } catch (error) {
+        console.error('블로그 포스트 로딩 실패:', error);
+        setBlogPosts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadBlogPosts();
+  }, []);
 
   // 모든 태그 추출
-  const allTags = Array.from(new Set(mockBlogPosts.flatMap(post => post.tags)));
+  const allTags = Array.from(new Set(blogPosts.flatMap(post => post.tags || [])));
   const tags = ['all', ...allTags];
 
   const filteredPosts = selectedTag === 'all' 
-    ? mockBlogPosts 
-    : mockBlogPosts.filter(post => post.tags.includes(selectedTag));
+    ? blogPosts 
+    : blogPosts.filter(post => post.tags?.includes(selectedTag));
 
-  const featuredPost = mockBlogPosts.find(post => post.featured);
+  const featuredPost = blogPosts.find(post => post.featured);
   const regularPosts = filteredPosts.filter(post => !post.featured);
 
   return (
