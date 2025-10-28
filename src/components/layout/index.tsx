@@ -35,7 +35,7 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin = false }) => {
           className="fixed top-0 left-0 right-0 z-50 orbio-glass border-b border-orbio-blue-200/30"
         >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center h-20">
             {/* 로고 */}
             <Link to={isAdmin ? '/admin' : '/'} className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br from-orbio-blue-500 to-orbio-green-500 rounded-xl flex items-center justify-center">
@@ -44,8 +44,8 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin = false }) => {
               <span className="text-2xl font-black orbio-text-gradient">ORBIO</span>
             </Link>
             
-            {/* 데스크톱 네비게이션 */}
-            <nav className="hidden md:flex items-center space-x-8">
+            {/* 데스크톱 네비게이션 - 가운데 정렬 */}
+            <nav className="hidden md:flex items-center space-x-8 flex-1 justify-center">
               {navItems.map((item) => (
                 <div key={item.path} className="relative">
                   {item.hasDropdown ? (
@@ -129,7 +129,7 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin = false }) => {
                 )}
               </div>
               
-              {/* 모바일 햄버거 메뉴 - 우측에 위치 */}
+              {/* 모바일 햄버거 메뉴 - 우측에 위치 (변경 없음) */}
               <HamburgerMenu 
                 isOpen={isMobileMenuOpen} 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
