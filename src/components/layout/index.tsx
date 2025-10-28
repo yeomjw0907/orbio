@@ -36,16 +36,18 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin = false }) => {
         >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-20">
-            {/* 로고 */}
-            <Link to={isAdmin ? '/admin' : '/'} className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-orbio-blue-500 to-orbio-green-500 rounded-xl flex items-center justify-center">
-                <span className="text-white font-black text-xl">O</span>
-              </div>
-              <span className="text-2xl font-black orbio-text-gradient">ORBIO</span>
-            </Link>
+            {/* 로고 - 왼쪽 영역 */}
+            <div className="flex items-center space-x-3 flex-1">
+              <Link to={isAdmin ? '/admin' : '/'} className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-orbio-blue-500 to-orbio-green-500 rounded-xl flex items-center justify-center">
+                  <span className="text-white font-black text-xl">O</span>
+                </div>
+                <span className="text-2xl font-black orbio-text-gradient">ORBIO</span>
+              </Link>
+            </div>
             
-            {/* 데스크톱 네비게이션 - 가운데 정렬 */}
-            <nav className="hidden md:flex items-center space-x-8 flex-1 justify-center">
+            {/* 데스크톱 네비게이션 - 정확한 가운데 정렬 */}
+            <nav className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
                 <div key={item.path} className="relative">
                   {item.hasDropdown ? (
@@ -98,7 +100,7 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin = false }) => {
             </nav>
             
             {/* 우측 영역 - 햄버거 메뉴와 데스크톱 버튼들 */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 flex-1 justify-end">
               {/* 데스크톱 버튼들 */}
               <div className="hidden md:flex items-center space-x-4">
                 {!isAdmin && (
