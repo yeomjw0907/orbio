@@ -1,49 +1,88 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { brandValues } from '../../data';
-import { fetchProducts } from '../../lib/api';
-import { Tables } from '../../lib/supabase';
+import { brandValues, mockProducts } from '../../data';
+import { productApi } from '../../lib/api';
+import { Product } from '../../types';
 import { GradientBackground } from '../../components/background/BackgroundAnimations';
 import { AnimatedText, GradientText } from '../../components/animations/AnimatedText';
 import { FeatureCard, ProductCard } from '../../components/cards/AnimatedCards';
 import Threads from '../../components/animations/Threads';
+import { WaterDropLoading } from '../../components/ui';
 
 export const HomePage: React.FC = () => {
-  const [products, setProducts] = useState<Tables<'products'>[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [dataSource, setDataSource] = useState<'supabase' | 'mock'>('mock');
+
+  // 제품 정렬 함수 메모이제이션
+  const sortProductsByCapacity = useCallback((products: Product[]) => {
+    return products.sort((a, b) => {
+      const capacityA = parseInt(a.specifications?.capacity?.replace('ml', '') || '0');
+      const capacityB = parseInt(b.specifications?.capacity?.replace('ml', '') || '0');
+      return capacityA - capacityB;
+    });
+  }, []);
+
+  // 제품 로딩 함수 메모이제이션
+  const loadProducts = useCallback(async () => {
+    try {
+      console.log('🔄 제품 데이터 로딩 시작...');
+      const data = await productApi.getAll();
+      console.log('📊 Supabase에서 받은 데이터:', data);
+      
+      if (data && data.length >= 3) {
+        const sortedData = sortProductsByCapacity(data);
+        setProducts(sortedData.slice(0, 3));
+        setDataSource('supabase');
+        console.log('✅ Supabase 데이터 사용:', sortedData.slice(0, 3));
+      } else {
+        const sortedMock = sortProductsByCapacity(mockProducts);
+        setProducts(sortedMock.slice(0, 3));
+        setDataSource('mock');
+        console.log('⚠️ Supabase 데이터 부족, Mock 데이터 사용:', sortedMock.slice(0, 3));
+      }
+    } catch (error) {
+      console.error('❌ 제품 로딩 실패:', error);
+      const sortedMock = sortProductsByCapacity(mockProducts);
+      setProducts(sortedMock.slice(0, 3));
+      setDataSource('mock');
+      console.log('🔄 에러로 인해 Mock 데이터 사용:', sortedMock.slice(0, 3));
+    } finally {
+      setLoading(false);
+    }
+  }, [sortProductsByCapacity]);
 
   useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const data = await fetchProducts();
-        setProducts(data.slice(0, 3)); // 최신 3개 제품만 표시
-      } catch (error) {
-        console.error('제품 로딩 실패:', error);
-        // 에러 시 빈 배열로 설정
-        setProducts([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadProducts();
+  }, [loadProducts]);
+
+  // 스크롤 핸들러 최적화 (throttling)
+  const handleScroll = useCallback(() => {
+    const header = document.querySelector('header');
+    if (header) {
+      const scrolled = window.pageYOffset;
+      const opacity = Math.min(scrolled / 100, 0.95);
+      header.style.backgroundColor = `rgba(255, 255, 255, ${opacity})`;
+    }
   }, []);
 
   useEffect(() => {
-    // 스크롤에 따른 헤더 투명도 조절
-    const handleScroll = () => {
-      const header = document.querySelector('header');
-      if (header) {
-        const scrolled = window.pageYOffset;
-        const opacity = Math.min(scrolled / 100, 0.95);
-        header.style.backgroundColor = `rgba(255, 255, 255, ${opacity})`;
+    // 스크롤 이벤트 최적화
+    let ticking = false;
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    return () => window.removeEventListener('scroll', throttledScroll);
+  }, [handleScroll]);
 
   return (
     <GradientBackground>
@@ -99,7 +138,7 @@ export const HomePage: React.FC = () => {
                 className="w-full sm:w-auto"
               >
                 <Link to="/products">
-                  <button className="orbio-button px-8 sm:px-12 py-3 sm:py-4 text-base sm:text-lg font-semibold shadow-lg w-full sm:w-auto">
+                  <button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 sm:px-12 py-3 sm:py-4 text-base sm:text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 w-full sm:w-auto transform hover:-translate-y-1">
                     제품 살펴보기
                   </button>
                 </Link>
@@ -119,7 +158,7 @@ export const HomePage: React.FC = () => {
                       contactSection.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
-                  className="orbio-button-secondary px-8 sm:px-12 py-3 sm:py-4 text-base sm:text-lg font-semibold shadow-lg w-full sm:w-auto"
+                  className="bg-white/90 hover:bg-white text-gray-800 hover:text-gray-900 px-8 sm:px-12 py-3 sm:py-4 text-base sm:text-lg font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto border border-gray-200 hover:border-gray-300 transform hover:-translate-y-1"
                 >
                   문의하기
                 </button>
@@ -184,32 +223,37 @@ export const HomePage: React.FC = () => {
             <p className="text-base sm:text-lg text-gray-700 max-w-4xl mx-auto px-4 leading-relaxed">
               공인 기관에서 위생성과 친환경성을 모두 인정받은 ORBIO Easy-Clean 텀블러 시리즈를 소개합니다. 세제 없이도 표면의 오염물질을 효과적으로 제거할 수 있어, 건강과 환경 모두를 생각한 신뢰받는 선택입니다.
             </p>
+            
+            {/* 데이터 소스 디버그 정보 */}
+            <div className="text-xs text-gray-500 mt-2">
+              데이터 소스: {dataSource === 'supabase' ? '🟢 Supabase' : '🟡 Mock Data'} | 
+              제품 수: {products.length}개
+            </div>
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
             {loading ? (
-              // 로딩 상태
-              Array.from({ length: 3 }).map((_, index) => (
-                <div key={index} className="bg-white rounded-2xl shadow-lg p-6 animate-pulse">
-                  <div className="bg-gray-200 h-48 rounded-xl mb-4"></div>
-                  <div className="bg-gray-200 h-6 rounded mb-2"></div>
-                  <div className="bg-gray-200 h-4 rounded mb-4"></div>
-                  <div className="bg-gray-200 h-8 rounded"></div>
-                </div>
-              ))
+              // 물방울 로딩 애니메이션
+              <div className="col-span-full flex justify-center py-20">
+                <WaterDropLoading 
+                  size="lg" 
+                  color="gradient" 
+                  text="제품을 불러오는 중..." 
+                />
+              </div>
             ) : products.length > 0 ? (
-              // Supabase 데이터 사용
+              // 제품 카드 렌더링 최적화
               products.map((product, index) => (
                 <ProductCard
-                  key={product.id}
+                  key={`${dataSource}-${product.id}`}
                   product={{
                     id: product.id,
                     name: product.name,
                     description: product.description,
-                    price: product.price / 100, // 센트를 원으로 변환
-                    image: product.image || '/images/products/default.jpg',
-                    features: product.features || [],
-                    category: product.category
+                    price: product.price,
+                    image: product.image,
+                    features: product.features,
+                    specifications: product.specifications
                   }}
                   delay={index * 0.1}
                 />
@@ -225,9 +269,9 @@ export const HomePage: React.FC = () => {
           <div className="text-center mt-12 sm:mt-16 orbio-slide-up">
             <Link to="/products">
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="orbio-button-secondary px-8 sm:px-10 py-3 sm:py-4 text-base sm:text-lg font-semibold shadow-lg"
+                className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-8 sm:px-10 py-3 sm:py-4 text-base sm:text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
               >
                 모든 제품 보기
               </motion.button>
@@ -255,6 +299,9 @@ export const HomePage: React.FC = () => {
               입증된 기술과 투명한 품질 관리로 여러분의 일상에 안전과 지속가능성을 더합니다.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4">
+              {/* 회원가입 버튼 숨김 처리 - 기능은 유지 */}
+              {/* 필요시 아래 주석을 해제하여 활성화 가능 */}
+              {/* 
               <Link to="/register">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -264,8 +311,9 @@ export const HomePage: React.FC = () => {
                   회원가입
                 </motion.button>
               </Link>
+              */}
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => {
                   const contactSection = document.getElementById('contact-modal');
@@ -273,7 +321,7 @@ export const HomePage: React.FC = () => {
                     contactSection.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                className="bg-white/20 backdrop-blur-sm border-2 border-white/30 text-white hover:bg-white/30 hover:border-white/50 px-8 sm:px-10 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-2xl transition-all duration-300 shadow-lg w-full sm:w-auto"
+                className="bg-white/90 hover:bg-white text-gray-800 hover:text-gray-900 px-8 sm:px-10 py-3 sm:py-4 text-base sm:text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 w-full sm:w-auto border border-white/20 hover:border-white/40 transform hover:-translate-y-1"
               >
                 문의하기
               </motion.button>

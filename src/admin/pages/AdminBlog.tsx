@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Card, Button } from '../../components/ui';
-import { useAdminStore } from '../../store';
-import { useEffect, useState } from 'react';
-import { formatDateTime } from '../../utils';
+import { Card, Button, WaterDropLoading } from '../../components/ui';
+import { blogApi } from '../../lib/api';
 
 export const AdminBlog: React.FC = () => {
-  const { blogPosts, isLoading, fetchBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost } = useAdminStore();
+  const [blogPosts, setBlogPosts] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
-  const [editingPost, setEditingPost] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -19,46 +17,74 @@ export const AdminBlog: React.FC = () => {
   });
 
   useEffect(() => {
-    fetchBlogPosts();
-  }, [fetchBlogPosts]);
+    loadBlogPosts();
+  }, []);
+
+  const loadBlogPosts = async () => {
+    try {
+      const data = await blogApi.getAll();
+      setBlogPosts(data);
+    } catch (error) {
+      console.error('블로그 포스트 로딩 실패:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleCreatePost = async (e: React.FormEvent) => {
     e.preventDefault();
     const tags = formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag);
     
-    await createBlogPost({
-      title: formData.title,
-      content: formData.content,
-      excerpt: formData.excerpt,
-      author: formData.author,
-      tags,
-      featured: formData.featured
-    });
-    
-    setIsCreating(false);
-    setFormData({
-      title: '',
-      content: '',
-      excerpt: '',
-      author: '',
-      tags: '',
-      featured: false
-    });
+    try {
+      await blogApi.create({
+        title: formData.title,
+        content: formData.content,
+        excerpt: formData.excerpt,
+        author: formData.author,
+        published_at: new Date().toISOString(),
+        tags,
+        featured: formData.featured,
+        image: undefined
+      });
+      
+      setIsCreating(false);
+      setFormData({
+        title: '',
+        content: '',
+        excerpt: '',
+        author: '',
+        tags: '',
+        featured: false
+      });
+      
+      // 목록 새로고침
+      loadBlogPosts();
+    } catch (error) {
+      console.error('블로그 포스트 생성 실패:', error);
+      alert('블로그 포스트 생성에 실패했습니다.');
+    }
   };
 
   const handleDeletePost = async (id: string) => {
     if (window.confirm('정말로 이 글을 삭제하시겠습니까?')) {
-      await deleteBlogPost(id);
+      try {
+        await blogApi.delete(id);
+        loadBlogPosts(); // 목록 새로고침
+      } catch (error) {
+        console.error('블로그 포스트 삭제 실패:', error);
+        alert('블로그 포스트 삭제에 실패했습니다.');
+      }
     }
   };
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orbio-blue mx-auto mb-4"></div>
-          <p className="text-gray-600">블로그 데이터를 불러오는 중...</p>
-        </div>
+        <WaterDropLoading 
+          size="md" 
+          color="gradient" 
+          text="블로그 데이터를 불러오는 중..." 
+        />
       </div>
     );
   }
@@ -92,7 +118,7 @@ export const AdminBlog: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <Card glass className="p-6">
+          <div className="toss-card toss-shadow-lg p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-6">
               새 글 작성
             </h2>
@@ -107,7 +133,7 @@ export const AdminBlog: React.FC = () => {
                     value={formData.title}
                     onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orbio-blue focus:border-transparent"
+                    className="w-full toss-input"
                     placeholder="글 제목을 입력하세요"
                   />
                 </div>
@@ -120,7 +146,7 @@ export const AdminBlog: React.FC = () => {
                     value={formData.author}
                     onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orbio-blue focus:border-transparent"
+                    className="w-full toss-input"
                     placeholder="작성자명을 입력하세요"
                   />
                 </div>
@@ -163,7 +189,7 @@ export const AdminBlog: React.FC = () => {
                     type="text"
                     value={formData.tags}
                     onChange={(e) => setFormData(prev => ({ ...prev, tags: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orbio-blue focus:border-transparent"
+                    className="w-full toss-input"
                     placeholder="태그를 쉼표로 구분하여 입력하세요"
                   />
                 </div>
@@ -183,15 +209,15 @@ export const AdminBlog: React.FC = () => {
               </div>
               
               <div className="flex space-x-4">
-                <Button type="submit">
+                <Button type="submit" className="toss-button">
                   글 작성
                 </Button>
-                <Button type="button" variant="outline" onClick={() => setIsCreating(false)}>
+                <Button type="button" variant="outline" onClick={() => setIsCreating(false)} className="toss-button">
                   취소
                 </Button>
               </div>
             </form>
-          </Card>
+          </div>
         </motion.div>
       )}
 
@@ -201,7 +227,7 @@ export const AdminBlog: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <Card glass className="overflow-hidden">
+        <div className="toss-card toss-shadow-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50">
@@ -250,7 +276,7 @@ export const AdminBlog: React.FC = () => {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-1">
-                        {post.tags.slice(0, 3).map((tag, idx) => (
+                        {post.tags.slice(0, 3).map((tag: string, idx: number) => (
                           <span
                             key={idx}
                             className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
@@ -273,7 +299,7 @@ export const AdminBlog: React.FC = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatDateTime(post.publishedAt)}
+                      {new Date(post.published_at).toLocaleDateString('ko-KR')}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex space-x-2">
@@ -295,7 +321,7 @@ export const AdminBlog: React.FC = () => {
               </tbody>
             </table>
           </div>
-        </Card>
+        </div>
       </motion.div>
     </div>
   );

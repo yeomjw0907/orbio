@@ -67,6 +67,60 @@ CREATE TABLE inventory (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- 문의 테이블
+CREATE TABLE inquiries (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT,
+  company TEXT,
+  subject TEXT NOT NULL,
+  message TEXT NOT NULL,
+  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'processing', 'completed', 'cancelled')),
+  privacy_agreed BOOLEAN NOT NULL DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- FAQ 테이블
+CREATE TABLE faqs (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  category TEXT NOT NULL CHECK (category IN ('general', 'product', 'shipping', 'payment', 'refund')),
+  question TEXT NOT NULL,
+  answer TEXT NOT NULL,
+  views INTEGER DEFAULT 0,
+  helpful_count INTEGER DEFAULT 0,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 공지사항 테이블
+CREATE TABLE notices (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  author TEXT NOT NULL,
+  is_important BOOLEAN DEFAULT false,
+  views INTEGER DEFAULT 0,
+  published_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 이벤트 테이블
+CREATE TABLE events (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  image TEXT,
+  start_date TIMESTAMP WITH TIME ZONE NOT NULL,
+  end_date TIMESTAMP WITH TIME ZONE NOT NULL,
+  is_active BOOLEAN DEFAULT true,
+  views INTEGER DEFAULT 0,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- RLS (Row Level Security) 정책 설정
 
 -- 프로필 테이블 정책
@@ -193,6 +247,28 @@ CREATE POLICY "관리자만 재고 업데이트 가능" ON inventory
     )
   );
 
+-- 문의 테이블 정책
+ALTER TABLE inquiries ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "모든 사용자가 문의 생성 가능" ON inquiries
+  FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "관리자만 문의 조회 가능" ON inquiries
+  FOR SELECT USING (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "관리자만 문의 업데이트 가능" ON inquiries
+  FOR UPDATE USING (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
 -- 업데이트 시간 자동 갱신 함수
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
@@ -218,7 +294,128 @@ CREATE TRIGGER update_orders_updated_at BEFORE UPDATE ON orders
 CREATE TRIGGER update_inventory_updated_at BEFORE UPDATE ON inventory
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- 샘플 데이터 삽입 (선택사항)
+CREATE TRIGGER update_inquiries_updated_at BEFORE UPDATE ON inquiries
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- 고객센터 테이블 정책
+-- FAQ 테이블 정책 (모든 사용자가 읽기 가능, 관리자만 쓰기 가능)
+ALTER TABLE faqs ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "모든 사용자가 FAQ 조회 가능" ON faqs
+  FOR SELECT USING (true);
+
+CREATE POLICY "관리자만 FAQ 생성 가능" ON faqs
+  FOR INSERT WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "관리자만 FAQ 업데이트 가능" ON faqs
+  FOR UPDATE USING (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "관리자만 FAQ 삭제 가능" ON faqs
+  FOR DELETE USING (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+-- 공지사항 테이블 정책 (모든 사용자가 읽기 가능, 관리자만 쓰기 가능)
+ALTER TABLE notices ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "모든 사용자가 공지사항 조회 가능" ON notices
+  FOR SELECT USING (true);
+
+CREATE POLICY "관리자만 공지사항 생성 가능" ON notices
+  FOR INSERT WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "관리자만 공지사항 업데이트 가능" ON notices
+  FOR UPDATE USING (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "관리자만 공지사항 삭제 가능" ON notices
+  FOR DELETE USING (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+-- 이벤트 테이블 정책 (모든 사용자가 읽기 가능, 관리자만 쓰기 가능)
+ALTER TABLE events ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "모든 사용자가 이벤트 조회 가능" ON events
+  FOR SELECT USING (true);
+
+CREATE POLICY "관리자만 이벤트 생성 가능" ON events
+  FOR INSERT WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "관리자만 이벤트 업데이트 가능" ON events
+  FOR UPDATE USING (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "관리자만 이벤트 삭제 가능" ON events
+  FOR DELETE USING (
+    EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+-- 고객센터 테이블 트리거
+CREATE TRIGGER update_faqs_updated_at BEFORE UPDATE ON faqs
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_notices_updated_at BEFORE UPDATE ON notices
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_events_updated_at BEFORE UPDATE ON events
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- 고객센터 샘플 데이터
+INSERT INTO faqs (category, question, answer) VALUES
+('general', 'ORBIO는 어떤 회사인가요?', 'ORBIO는 친환경 세척 기술을 선도하는 혁신적인 기업입니다. 초친수 코팅 기술을 통해 무세제로도 완벽한 세척이 가능한 제품을 제공합니다.'),
+('product', '초친수 코팅이 무엇인가요?', '초친수 코팅은 물이 표면에 완전히 퍼져 자가정화 효과를 제공하는 혁신적인 기술입니다. 일반 발수 코팅과 달리 물이 스스로 오염물질을 씻어내는 구조입니다.'),
+('product', '99.999% 항균력이 정말인가요?', '네, ORBIO의 항균 기술은 첨단 나노 기술을 기반으로 99.999% 이상의 극강 항균력을 제공합니다. 이는 일반 항균제 99.9%보다 10배 이상 강력한 수준입니다.'),
+('shipping', '배송은 얼마나 걸리나요?', '일반적으로 주문 후 2-3일 내에 배송되며, 도착까지는 1-2일이 추가로 소요됩니다. 급한 경우 당일 배송도 가능합니다.'),
+('payment', '어떤 결제 방법을 지원하나요?', '신용카드, 체크카드, 계좌이체, 간편결제(카카오페이, 네이버페이, 페이코) 등 다양한 결제 방법을 지원합니다.'),
+('refund', '교환/반품 정책은 어떻게 되나요?', '제품 수령 후 7일 이내에 교환/반품이 가능합니다. 단순 변심의 경우 배송비는 고객 부담이며, 제품 하자의 경우 무료로 처리됩니다.');
+
+INSERT INTO notices (title, content, author, is_important) VALUES
+('ORBIO 공식 홈페이지 오픈 안내', '<h2>ORBIO 공식 홈페이지가 오픈되었습니다!</h2><p>더 나은 서비스 제공을 위해 새로운 홈페이지를 구축했습니다. 다양한 제품 정보와 기술 소개를 확인해보세요.</p>', 'ORBIO 마케팅팀', true),
+('2024년 신제품 출시 예정', '<h2>혁신적인 신제품이 곧 출시됩니다</h2><p>더욱 향상된 초친수 코팅 기술이 적용된 신제품을 준비 중입니다. 많은 관심과 기대 부탁드립니다.</p>', 'ORBIO R&D팀', false),
+('시스템 점검 안내', '<h2>정기 시스템 점검 안내</h2><p>더 나은 서비스 제공을 위해 매월 첫째 주 일요일 새벽 2시-4시에 시스템 점검을 실시합니다.</p>', 'ORBIO IT팀', false);
+
+INSERT INTO events (title, description, start_date, end_date, is_active) VALUES
+('신규 회원 20% 할인 이벤트', 'ORBIO 신규 회원을 위한 특별 할인 이벤트입니다. 모든 제품에 20% 할인이 적용됩니다.', '2024-01-01 00:00:00', '2024-12-31 23:59:59', true),
+('초친수 코팅 기술 세미나', 'ORBIO의 혁신적인 초친수 코팅 기술에 대한 전문가 세미나를 개최합니다. 무료 참가 가능합니다.', '2024-02-15 14:00:00', '2024-02-15 17:00:00', true),
+('친환경 라이프스타일 캠페인', '지구를 위한 친환경 라이프스타일을 함께 실천해보세요. 참여자 전원에게 특별 선물을 드립니다.', '2024-03-01 00:00:00', '2024-03-31 23:59:59', true);
 -- 제품 샘플 데이터
 INSERT INTO products (name, description, price, category, image, features, specifications) VALUES
 ('ORBIO Easy-Clean 텀블러 350ml', '혁신적인 초친수 코팅 기술로 물만으로도 완벽하게 세척되는 텀블러입니다.', 25000, 'easy-clean', '/images/products/tumbler-350ml.jpg', 

@@ -1,11 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Supabase 프로젝트 설정
-// 실제 프로젝트에서는 환경변수로 관리해야 합니다
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || 'YOUR_SUPABASE_URL';
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
+const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('Supabase 환경변수가 설정되지 않았습니다. .env.local 파일을 확인하세요.');
+  console.error('REACT_APP_SUPABASE_URL:', supabaseUrl);
+  console.error('REACT_APP_SUPABASE_ANON_KEY:', supabaseAnonKey ? '설정됨' : '설정되지 않음');
+}
+
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder-key'
+);
 
 // 데이터베이스 타입 정의
 export interface Database {
@@ -208,6 +216,68 @@ export interface Database {
           updated_at?: string;
         };
       };
+      inquiries: {
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          phone: string | null;
+          company: string | null;
+          subject: string;
+          message: string;
+          status: 'pending' | 'processing' | 'completed' | 'cancelled';
+          privacy_agreed: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          email: string;
+          phone?: string | null;
+          company?: string | null;
+          subject: string;
+          message: string;
+          status?: 'pending' | 'processing' | 'completed' | 'cancelled';
+          privacy_agreed: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          email?: string;
+          phone?: string | null;
+          company?: string | null;
+          subject?: string;
+          message?: string;
+          status?: 'pending' | 'processing' | 'completed' | 'cancelled';
+          privacy_agreed?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
     };
   };
 }
+
+export type Tables<
+  PublicTableNameOrOptions extends
+    | keyof Database['public']['Tables']
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : PublicTableNameOrOptions extends keyof Database['public']['Tables']
+    ? Database['public']['Tables'][PublicTableNameOrOptions] extends {
+        Row: infer R;
+      }
+      ? R
+      : never
+    : never;

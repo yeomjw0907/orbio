@@ -51,9 +51,9 @@ export interface BlogPost {
   content: string;
   excerpt: string;
   author: string;
-  publishedAt: Date;
+  published_at: string;
   tags: string[];
-  image?: string;
+  image?: string | null;
   featured: boolean;
 }
 

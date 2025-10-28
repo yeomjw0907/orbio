@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button } from '../../components/ui';
-import { signInWithEmail } from '../../lib/auth';
+import { authApi } from '../../lib/auth';
 import { supabase } from '../../lib/supabase';
 
 export const AdminLogin: React.FC = () => {
@@ -18,7 +18,12 @@ export const AdminLogin: React.FC = () => {
     setIsLoading(true);
     
     try {
-      const user = await signInWithEmail(email, password);
+      const { user, error } = await authApi.signIn(email, password);
+      if (error) {
+        setError(error);
+        return;
+      }
+      
       if (user) {
         // 관리자 권한 확인
         const { data: profile } = await supabase

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ContactModal } from '../ContactModal';
+import { MobileSidebar, HamburgerMenu } from '../ui';
 
 interface HeaderProps {
   isAdmin?: boolean;
@@ -9,7 +9,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ isAdmin = false }) => {
   const location = useLocation();
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const navItems = isAdmin 
     ? [
@@ -23,7 +23,8 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin = false }) => {
         { name: '브랜드', path: '/brand' },
         { name: '제품', path: '/products' },
         { name: '블로그', path: '/blog' },
-        { name: '문의', path: '/contact', isModal: true },
+        { name: '고객센터', path: '#', hasDropdown: true },
+        { name: '문의하기', path: '/contact' },
       ];
 
   return (
@@ -35,6 +36,7 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin = false }) => {
         >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
+            {/* 로고 */}
             <Link to={isAdmin ? '/admin' : '/'} className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br from-orbio-blue-500 to-orbio-green-500 rounded-xl flex items-center justify-center">
                 <span className="text-white font-black text-xl">O</span>
@@ -42,65 +44,107 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin = false }) => {
               <span className="text-2xl font-black orbio-text-gradient">ORBIO</span>
             </Link>
             
+            {/* 데스크톱 네비게이션 */}
             <nav className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
-                item.isModal ? (
-                  <button
-                    key={item.path}
-                    onClick={() => setIsContactModalOpen(true)}
-                    className="text-sm font-semibold transition-all duration-300 hover:text-orbio-blue-600 text-gray-600"
-                  >
-                    {item.name}
-                  </button>
-                ) : (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`text-sm font-semibold transition-all duration-300 hover:text-orbio-blue-600 ${
-                      location.pathname === item.path
-                        ? 'text-orbio-blue-600'
-                        : 'text-gray-600'
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                )
+                <div key={item.path} className="relative">
+                  {item.hasDropdown ? (
+                    <div className="relative group">
+                      <Link
+                        to="/customer/faq"
+                        className={`text-sm font-semibold transition-all duration-300 hover:text-orbio-blue-600 ${
+                          location.pathname.startsWith('/customer')
+                            ? 'text-orbio-blue-600'
+                            : 'text-gray-600'
+                        }`}
+                      >
+                        {item.name}
+                      </Link>
+                      <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                        <Link
+                          to="/customer/faq"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-orbio-blue-600"
+                        >
+                          자주 묻는 질문
+                        </Link>
+                        <Link
+                          to="/customer/notice"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-orbio-blue-600"
+                        >
+                          공지사항
+                        </Link>
+                        <Link
+                          to="/customer/event"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-orbio-blue-600"
+                        >
+                          이벤트
+                        </Link>
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      to={item.path}
+                      className={`text-sm font-semibold transition-all duration-300 hover:text-orbio-blue-600 ${
+                        location.pathname === item.path
+                          ? 'text-orbio-blue-600'
+                          : 'text-gray-600'
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+                </div>
               ))}
             </nav>
             
+            {/* 우측 영역 - 햄버거 메뉴와 데스크톱 버튼들 */}
             <div className="flex items-center space-x-4">
-              {!isAdmin && (
-                <>
-                        <Link to="/login">
-                          <button className="text-gray-600 hover:text-orbio-blue-600 transition-colors duration-300 px-4 py-2">
-                            로그인
-                          </button>
-                        </Link>
-                        <Link to="/register">
-                          <button className="orbio-button px-6 py-2 text-sm font-semibold">
-                            회원가입
-                          </button>
-                        </Link>
-                </>
-              )}
-              {isAdmin && (
-                <button 
-                  onClick={() => window.location.href = '/'}
-                  className="orbio-button-secondary px-4 py-2 text-sm font-semibold"
-                >
-                  사이트로
-                </button>
-              )}
+              {/* 데스크톱 버튼들 */}
+              <div className="hidden md:flex items-center space-x-4">
+                {!isAdmin && (
+                  <>
+                    {/* 로그인/회원가입 버튼 숨김 처리 - 기능은 유지 */}
+                    {/* 필요시 아래 주석을 해제하여 활성화 가능 */}
+                    {/* 
+                    <Link to="/login">
+                      <button className="text-gray-600 hover:text-orbio-blue-600 transition-colors duration-300 px-4 py-2">
+                        로그인
+                      </button>
+                    </Link>
+                    <Link to="/register">
+                      <button className="orbio-button px-6 py-2 text-sm font-semibold">
+                        회원가입
+                      </button>
+                    </Link>
+                    */}
+                  </>
+                )}
+                {isAdmin && (
+                  <button 
+                    onClick={() => window.location.href = '/'}
+                    className="orbio-button-secondary px-4 py-2 text-sm font-semibold"
+                  >
+                    사이트로
+                  </button>
+                )}
+              </div>
+              
+              {/* 모바일 햄버거 메뉴 - 우측에 위치 */}
+              <HamburgerMenu 
+                isOpen={isMobileMenuOpen} 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+              />
             </div>
           </div>
         </div>
+        
+        {/* Mobile Sidebar - 토스 스타일 */}
+        <MobileSidebar 
+          isOpen={isMobileMenuOpen} 
+          onClose={() => setIsMobileMenuOpen(false)} 
+          isAdmin={isAdmin}
+        />
       </motion.header>
-      
-      {/* Contact Modal */}
-      <ContactModal 
-        isOpen={isContactModalOpen} 
-        onClose={() => setIsContactModalOpen(false)} 
-      />
     </>
   );
 };
@@ -151,10 +195,10 @@ export const Footer: React.FC<FooterProps> = ({ isAdmin = false }) => {
           <div>
             <h3 className="font-semibold mb-4 text-gray-800">고객지원</h3>
             <ul className="space-y-2 text-gray-600">
-              <li><a href="#" className="hover:text-orbio-blue-600 transition-colors">문의하기</a></li>
-              <li><a href="#" className="hover:text-orbio-blue-600 transition-colors">배송안내</a></li>
-              <li><a href="#" className="hover:text-orbio-blue-600 transition-colors">교환/반품</a></li>
-              <li><a href="#" className="hover:text-orbio-blue-600 transition-colors">FAQ</a></li>
+              <li><Link to="/contact" className="hover:text-orbio-blue-600 transition-colors">문의하기</Link></li>
+              <li><Link to="/customer/faq" className="hover:text-orbio-blue-600 transition-colors">자주 묻는 질문</Link></li>
+              <li><Link to="/customer/notice" className="hover:text-orbio-blue-600 transition-colors">공지사항</Link></li>
+              <li><Link to="/customer/event" className="hover:text-orbio-blue-600 transition-colors">이벤트</Link></li>
             </ul>
           </div>
         </div>

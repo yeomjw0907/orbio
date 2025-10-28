@@ -143,17 +143,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   delay = 0
 }) => {
   return (
-    <AnimatedCard delay={delay} className="overflow-hidden group">
-      <div className="relative h-64 bg-gradient-to-br from-orbio-blue-50 to-orbio-green-50 flex items-center justify-center p-6 overflow-hidden">
+    <AnimatedCard delay={delay} className="overflow-hidden group bg-white border border-gray-100 hover:border-gray-200 transition-all duration-300 hover:shadow-2xl">
+      <div className="relative h-64 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-6 overflow-hidden">
         <motion.div
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ scale: 1.1, rotate: 5 }}
           transition={{ duration: 0.3 }}
-          className="w-32 h-32 bg-white/80 rounded-full flex items-center justify-center shadow-lg"
+          className="w-32 h-32 bg-gradient-to-br from-white to-gray-50 rounded-3xl flex items-center justify-center shadow-xl border border-gray-200"
         >
-          <FontAwesomeIcon icon={faCoffee} className="text-6xl text-orbio-blue-600" />
+          <FontAwesomeIcon icon={faCoffee} className="text-6xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent" />
         </motion.div>
-        <div className="absolute top-4 right-4 bg-orbio-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-          {product.specifications.capacity}
+        {/* 토스 스타일 용량 태그 - 왼쪽 상단, 회전 없음 */}
+        <div className="absolute top-4 left-4">
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1.5 rounded-2xl text-sm font-bold shadow-lg transition-transform duration-200 hover:scale-105">
+            {product.specifications.capacity}
+          </div>
         </div>
       </div>
       
@@ -166,25 +169,28 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </p>
         
         <div className="mb-4">
-          <h4 className="text-sm font-semibold text-gray-700 mb-2">주요 특징:</h4>
-          <ul className="space-y-1">
+          <h4 className="text-sm font-bold text-gray-800 mb-3">주요 특징</h4>
+          <ul className="space-y-2">
             {product.features.slice(0, 2).map((feature, index) => (
-              <li key={index} className="text-sm text-gray-600 flex items-center">
-                <span className="w-1.5 h-1.5 bg-orbio-green-500 rounded-full mr-2"></span>
-                {feature}
+              <li key={index} className="text-sm text-gray-700 flex items-center bg-gray-50 px-3 py-2 rounded-xl">
+                <span className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full mr-3 flex-shrink-0"></span>
+                <span className="font-medium">{feature}</span>
               </li>
             ))}
           </ul>
         </div>
         
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold orbio-text-gradient-blue">
-            {product.price.toLocaleString()}원
-          </span>
+          <div className="flex flex-col">
+            <span className="text-xs text-gray-500 font-medium">가격</span>
+            <span className="text-2xl font-black bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
+              {product.price.toLocaleString()}원
+            </span>
+          </div>
           <motion.button
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            className="orbio-button-green px-6 py-2 text-sm font-semibold"
+            className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-6 py-3 rounded-2xl text-sm font-bold shadow-lg hover:shadow-xl transition-all duration-200 border-0"
           >
             자세히 보기
           </motion.button>

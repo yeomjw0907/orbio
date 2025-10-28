@@ -94,7 +94,7 @@ export const mockBlogPosts: BlogPost[] = [
     `,
     excerpt: '혁신적인 초친수 코팅 기술로 더 이상 어려운 청소는 없습니다. 무세제로 완벽하게 세척되는 ORBIO의 코팅 기술을 소개합니다.',
     author: 'ORBIO R&D 팀',
-    publishedAt: new Date('2024-01-15'),
+    published_at: new Date('2024-01-15').toISOString(),
     tags: ['기술', '혁신', '초친수', '코팅'],
     featured: true,
     image: '/images/blog/easy-clean-tech.jpg'
@@ -119,7 +119,7 @@ export const mockBlogPosts: BlogPost[] = [
     `,
     excerpt: '무세제로 더 깨끗하게. ORBIO와 함께 환경을 생각하는 친환경 라이프스타일을 시작해보세요.',
     author: 'ORBIO 마케팅 팀',
-    publishedAt: new Date('2024-01-10'),
+    published_at: new Date('2024-01-10').toISOString(),
     tags: ['친환경', '무세제', '지속가능', '라이프스타일'],
     featured: false,
     image: '/images/blog/eco-lifestyle.jpg'
@@ -144,7 +144,7 @@ export const mockBlogPosts: BlogPost[] = [
     `,
     excerpt: '99.999% 이상의 극강 항균력. ORBIO의 항균 기술이 어떻게 작동하는지 과학적 원리를 자세히 알아보세요.',
     author: 'ORBIO 연구소',
-    publishedAt: new Date('2024-01-05'),
+    published_at: new Date('2024-01-05').toISOString(),
     tags: ['과학', '항균', '기술', '위생'],
     featured: false,
     image: '/images/blog/antimicrobial-science.jpg'

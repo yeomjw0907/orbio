@@ -105,7 +105,7 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         content: 'ORBIO의 Easy-Clean 기술은...',
         excerpt: '혁신적인 세척 기술로 더 이상 어려운 청소는 없습니다.',
         author: 'ORBIO 팀',
-        publishedAt: new Date('2024-01-10'),
+        published_at: new Date('2024-01-10').toISOString(),
         tags: ['기술', '혁신', 'Easy-Clean'],
         featured: true,
       },
@@ -161,11 +161,11 @@ export const useAdminStore = create<AdminState>((set, get) => ({
     set({ orders: updatedOrders });
   },
   
-  createBlogPost: async (post: Omit<BlogPost, 'id' | 'publishedAt'>) => {
+  createBlogPost: async (post: Omit<BlogPost, 'id' | 'published_at'>) => {
     const newPost: BlogPost = {
       ...post,
       id: Math.random().toString(36).substr(2, 9),
-      publishedAt: new Date(),
+      published_at: new Date().toISOString(),
     };
     const blogPosts = get().blogPosts;
     set({ blogPosts: [...blogPosts, newPost] });

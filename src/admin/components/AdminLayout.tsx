@@ -9,7 +9,11 @@ import {
   faBlog, 
   faUsers, 
   faBoxes,
-  faSignOutAlt
+  faEnvelope,
+  faSignOutAlt,
+  faQuestionCircle,
+  faBullhorn,
+  faGift
 } from '@fortawesome/free-solid-svg-icons';
 
 interface AdminLayoutProps {
@@ -23,9 +27,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const navigation = [
     { name: '대시보드', href: '/admin', icon: faTachometerAlt },
     { name: '주문 관리', href: '/admin/orders', icon: faShoppingCart },
+    { name: '문의 관리', href: '/admin/inquiries', icon: faEnvelope },
     { name: '블로그 관리', href: '/admin/blog', icon: faBlog },
     { name: '회원 관리', href: '/admin/users', icon: faUsers },
     { name: '재고 관리', href: '/admin/inventory', icon: faBoxes },
+    { name: 'FAQ 관리', href: '/admin/faq', icon: faQuestionCircle },
+    { name: '공지사항 관리', href: '/admin/notice', icon: faBullhorn },
+    { name: '이벤트 관리', href: '/admin/event', icon: faGift },
   ];
 
   return (
