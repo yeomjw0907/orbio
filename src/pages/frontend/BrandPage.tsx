@@ -212,15 +212,15 @@ export const BrandPage: React.FC = () => {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-orbio-blue rounded-full"></div>
-                    <span className="text-gray-700">초친수 코팅: 무세제로 완벽 세척</span>
+                    <span className="text-gray-700"><span className="font-semibold text-orbio-blue">초친수(超親水) 코팅:</span> 오염물이 쉽게 씻겨 나가는 기술로 무세제로 완벽 세척</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-orbio-green rounded-full"></div>
-                    <span className="text-gray-700">항균 코팅: 99.999% 이상 항균력</span>
+                    <span className="text-gray-700"><span className="font-bold text-green-700">항균 코팅:</span> 99.999% 이상의 강력한 항균 효과</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-orbio-gray rounded-full"></div>
-                    <span className="text-gray-700">높은 표면경도: 스크래치 방지, 세정 용이, 내구성 강화</span>
+                    <span className="text-gray-700"><span className="font-semibold text-purple-700">높은 표면경도:</span> 표면경도가 높아 스크래치에 강하고 세정이 용이함</span>
                   </div>
                 </div>
               </Card>
@@ -240,7 +240,7 @@ export const BrandPage: React.FC = () => {
                 더 나은 제품을 만들기 위해 노력하고 있습니다.
               </p>
               <p className="text-lg text-gray-600">
-                특히 초친수 코팅 기술은 물이 표면에 완전히 퍼져 자가정화 효과를 제공하는 
+                특히 <span className="font-semibold text-orbio-blue">오염물이 쉽게 씻겨 나가는 초친수(超親水) 코팅 기술</span>은 물이 표면에 완전히 퍼져 자가정화 효과를 제공하는 
                 혁신적인 기술로, 무세제로도 완벽한 세척을 가능하게 합니다.
               </p>
             </motion.div>

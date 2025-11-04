@@ -49,8 +49,8 @@ export const ProductsPage: React.FC = () => {
             제품 라인업
           </h1>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-            혁신적인 초친수 코팅 기술로 만든 ORBIO의 제품들을 만나보세요. 
-            무세제 세척, 99.999% 이상 항균력, 높은 표면경도를 갖춘 다양한 제품을 확인할 수 있습니다.
+            <span className="font-semibold text-orbio-blue">오염물이 쉽게 씻겨 나가는 초친수(超親水) 코팅 기술</span>로 만든 ORBIO의 제품들을 만나보세요. 
+            무세제 세척, <span className="font-bold text-green-700">99.999% 이상의 강력한 항균 효과</span>, <span className="font-semibold text-purple-700">표면경도가 높아 스크래치에 강하고 세정이 용이</span>한 다양한 제품을 확인할 수 있습니다.
           </p>
         </motion.div>
 

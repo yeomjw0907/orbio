@@ -136,11 +136,13 @@ interface ProductCardProps {
     };
   };
   delay?: number;
+  onViewDetails?: () => void;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
   product,
-  delay = 0
+  delay = 0,
+  onViewDetails
 }) => {
   return (
     <AnimatedCard delay={delay} className="overflow-hidden group bg-white border border-gray-100 hover:border-gray-200 transition-all duration-300 hover:shadow-2xl">
@@ -190,6 +192,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <motion.button
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
+            onClick={onViewDetails}
             className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-6 py-3 rounded-2xl text-sm font-bold shadow-lg hover:shadow-xl transition-all duration-200 border-0"
           >
             자세히 보기

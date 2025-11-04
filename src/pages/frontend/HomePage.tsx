@@ -1,6 +1,14 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faDroplet, 
+  faShieldVirus, 
+  faGem, 
+  faStar,
+  faCoins
+} from '@fortawesome/free-solid-svg-icons';
 import { brandValues, mockProducts } from '../../data';
 import { productApi } from '../../lib/api';
 import { Product } from '../../types';
@@ -8,12 +16,14 @@ import { GradientBackground } from '../../components/background/BackgroundAnimat
 import { AnimatedText, GradientText } from '../../components/animations/AnimatedText';
 import { FeatureCard, ProductCard } from '../../components/cards/AnimatedCards';
 import Threads from '../../components/animations/Threads';
-import { WaterDropLoading } from '../../components/ui';
+import { WaterDropLoading, ProductModal } from '../../components/ui';
 
 export const HomePage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [dataSource, setDataSource] = useState<'supabase' | 'mock'>('mock');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 제품 정렬 함수 메모이제이션
   const sortProductsByCapacity = useCallback((products: Product[]) => {
@@ -56,6 +66,18 @@ export const HomePage: React.FC = () => {
   useEffect(() => {
     loadProducts();
   }, [loadProducts]);
+
+  // 제품 상세 모달 열기 핸들러
+  const handleViewProductDetails = useCallback((product: Product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  }, []);
+
+  // 모달 닫기 핸들러
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  }, []);
 
   // 스크롤 핸들러 최적화 (throttling)
   const handleScroll = useCallback(() => {
@@ -120,7 +142,7 @@ export const HomePage: React.FC = () => {
             {/* 서브타이틀 - 반응형 개선 */}
             <div className="text-base sm:text-lg md:text-xl text-gray-700 mb-8 sm:mb-12 max-w-5xl mx-auto leading-relaxed px-4">
               <p className="mb-2">
-                ORBIO는 무세제 초친수 코팅 기술을 적용해, 세제 없이도 위생적이고 안전한 세척 환경을 제공합니다.
+                ORBIO는 <span className="font-semibold text-orbio-blue">오염물이 쉽게 씻겨 나가는 초친수(超親水) 코팅 기술</span>을 적용해, 세제 없이도 위생적이고 안전한 세척 환경을 제공합니다.
               </p>
               <p className="text-gray-600">
                 국내외 인증기관에서 검증된 기술력으로, 오직 물만으로도 완벽한 청결을 경험할 수 있습니다.
@@ -221,14 +243,8 @@ export const HomePage: React.FC = () => {
               />
             </h2>
             <p className="text-base sm:text-lg text-gray-700 max-w-4xl mx-auto px-4 leading-relaxed">
-              공인 기관에서 위생성과 친환경성을 모두 인정받은 ORBIO Easy-Clean 텀블러 시리즈를 소개합니다. 세제 없이도 표면의 오염물질을 효과적으로 제거할 수 있어, 건강과 환경 모두를 생각한 신뢰받는 선택입니다.
+              공인 기관에서 위생성과 친환경성을 모두 인정받은 ORBIO Easy-Clean 텀블러 시리즈를 소개합니다. <span className="font-semibold text-orbio-blue">오염물이 쉽게 씻겨 나가는 초친수(超親水) 코팅 기술</span>로 세제 없이도 표면의 오염물질을 효과적으로 제거할 수 있어, 건강과 환경 모두를 생각한 신뢰받는 선택입니다.
             </p>
-            
-            {/* 데이터 소스 디버그 정보 */}
-            <div className="text-xs text-gray-500 mt-2">
-              데이터 소스: {dataSource === 'supabase' ? '🟢 Supabase' : '🟡 Mock Data'} | 
-              제품 수: {products.length}개
-            </div>
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
@@ -256,6 +272,7 @@ export const HomePage: React.FC = () => {
                     specifications: product.specifications
                   }}
                   delay={index * 0.1}
+                  onViewDetails={() => handleViewProductDetails(product)}
                 />
               ))
             ) : (
@@ -277,6 +294,139 @@ export const HomePage: React.FC = () => {
               </motion.button>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* 핵심 포인트 섹션 - ORBIO 스타일 */}
+      <section className="py-16 sm:py-24 lg:py-32 bg-white/80 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 sm:mb-16 lg:mb-20 orbio-slide-up"
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 sm:mb-6">
+              <GradientText 
+                text="ORBIO의 핵심 포인트" 
+                gradient="orbio-text-gradient-blue"
+              />
+            </h2>
+            <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto px-4">
+              혁신적인 기술로 만든 ORBIO 제품의 핵심 특징을 확인하세요.
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
+            {/* 초친수 코팅 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 sm:p-8 border-2 border-blue-200 hover:border-blue-400 transition-all duration-300"
+            >
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                <FontAwesomeIcon icon={faDroplet} className="text-3xl text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">
+                초친수 코팅
+              </h3>
+              <p className="text-gray-700 text-center leading-relaxed">
+                <span className="font-semibold text-blue-700">오염물이 쉽게 씻겨 나가는 초친수(超親水) 코팅 기술</span>로 무세제 완벽 세척이 가능합니다.
+              </p>
+            </motion.div>
+
+            {/* 항균 효과 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 sm:p-8 border-2 border-green-200 hover:border-green-400 transition-all duration-300"
+            >
+              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                <FontAwesomeIcon icon={faShieldVirus} className="text-3xl text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">
+                강력한 항균
+              </h3>
+              <p className="text-gray-700 text-center leading-relaxed">
+                <span className="font-bold text-green-700 text-lg">99.999% 이상의 강력한 항균 효과</span>로 위생을 보장합니다.
+              </p>
+            </motion.div>
+
+            {/* 표면경도 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 sm:p-8 border-2 border-purple-200 hover:border-purple-400 transition-all duration-300"
+            >
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                <FontAwesomeIcon icon={faGem} className="text-3xl text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">
+                높은 표면경도
+              </h3>
+              <p className="text-gray-700 text-center leading-relaxed">
+                <span className="font-semibold text-purple-700">표면경도가 높아 스크래치에 강하고 세정이 용이</span>합니다.
+              </p>
+            </motion.div>
+
+            {/* 색바램 방지 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl p-6 sm:p-8 border-2 border-amber-200 hover:border-amber-400 transition-all duration-300"
+            >
+              <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                <FontAwesomeIcon icon={faStar} className="text-3xl text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">
+                색바램 방지
+              </h3>
+              <p className="text-gray-700 text-center leading-relaxed">
+                <span className="font-semibold text-amber-700">시간이 지나도 색이 변하지 않는 견고한 내구성</span>을 자랑합니다.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 가격 정책 섹션 - ORBIO 스타일 */}
+      <section className="py-16 sm:py-24 lg:py-32 bg-gradient-to-r from-orbio-green-50/50 to-orbio-blue-50/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 sm:mb-16 orbio-slide-up"
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 sm:mb-6">
+              <GradientText 
+                text="합리적인 가격 정책" 
+                gradient="orbio-text-gradient"
+              />
+            </h2>
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border-2 border-orbio-blue-200 shadow-xl max-w-4xl mx-auto">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-20 h-20 bg-gradient-to-r from-orbio-blue to-orbio-green rounded-full flex items-center justify-center">
+                  <FontAwesomeIcon icon={faCoins} className="text-4xl text-white" />
+                </div>
+              </div>
+              <p className="text-lg sm:text-xl text-gray-700 leading-relaxed font-medium">
+                <span className="text-orbio-blue font-bold text-2xl">대량 생산 시 합리적인 가격으로,</span>
+                <br className="hidden sm:block" />
+                <span className="text-gray-800"> 한정판 제품은 프리미엄 라인으로 제공됩니다.</span>
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -329,6 +479,13 @@ export const HomePage: React.FC = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* 제품 상세 모달 */}
+      <ProductModal
+        product={selectedProduct}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </GradientBackground>
   );
 };

@@ -131,3 +131,6 @@ export { MobileSidebar } from './MobileSidebar';
 
 // Export HamburgerMenu component
 export { HamburgerMenu } from './HamburgerMenu';
+
+// Export ProductModal component
+export { ProductModal } from './ProductModal';

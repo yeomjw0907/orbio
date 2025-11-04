@@ -4,7 +4,7 @@ export const mockProducts: Product[] = [
   {
     id: '1',
     name: 'ORBIO Easy-Clean 텀블러 350ml',
-    description: '혁신적인 초친수 코팅 기술로 물만으로도 완벽하게 세척되는 텀블러입니다. 색바램이 없는 내구성 강한 표면으로 깨끗한 수분 섭취가 가능합니다. 컴팩트한 사이즈로 언제 어디서나 편리하게 사용하세요.',
+    description: '혁신적인 초친수 코팅 기술로 물만으로도 완벽하게 세척되는 텀블러입니다. 시간이 지나도 색이 변하지 않는 견고한 내구성으로 깨끗한 수분 섭취가 가능합니다. 컴팩트한 사이즈로 언제 어디서나 편리하게 사용하세요.',
     price: 25000,
     category: 'easy-clean',
     image: '/images/products/tumbler-350ml.jpg',
@@ -26,7 +26,7 @@ export const mockProducts: Product[] = [
   {
     id: '2',
     name: 'ORBIO Easy-Clean 텀블러 500ml',
-    description: '혁신적인 초친수 코팅 기술로 물만으로도 완벽하게 세척되는 텀블러입니다. 높은 표면경도로 스크래치에 강하며, 세정이 용이한 내구성 강한 디자인입니다. 색바램 없는 표면으로 항상 깨끗한 수분 섭취가 가능합니다.',
+    description: '혁신적인 초친수 코팅 기술로 물만으로도 완벽하게 세척되는 텀블러입니다. 시간이 지나도 색이 변하지 않는 견고한 내구성과 높은 표면경도로 스크래치에 강하며, 세정이 용이한 디자인입니다. 항상 깨끗한 수분 섭취가 가능합니다.',
     price: 30000,
     category: 'easy-clean',
     image: '/images/products/tumbler-500ml.jpg',
@@ -48,7 +48,7 @@ export const mockProducts: Product[] = [
   {
     id: '3',
     name: 'ORBIO Easy-Clean 텀블러 750ml',
-    description: '혁신적인 초친수 코팅으로 물만으로도 완벽하게 세척되는 대용량 텀블러입니다. 높은 표면경도와 강력한 내구성으로 스크래치 방지와 세정 용이성을 동시에 제공합니다. 색바램 없는 표면으로 깨끗한 수분 섭취가 가능합니다.',
+    description: '혁신적인 초친수 코팅으로 물만으로도 완벽하게 세척되는 대용량 텀블러입니다. 시간이 지나도 색이 변하지 않는 견고한 내구성과 높은 표면경도로 스크래치 방지와 세정 용이성을 동시에 제공합니다. 깨끗한 수분 섭취가 가능합니다.',
     price: 35000,
     category: 'easy-clean',
     image: '/images/products/tumbler-750ml.jpg',
@@ -87,8 +87,8 @@ export const mockBlogPosts: BlogPost[] = [
         <li>환경 친화적</li>
       </ul>
       
-      <h3>초친수 vs 발수</h3>
-      <p>일반 발수 코팅은 물방울이 떨어지는 것을 방지하지만, 초친수 코팅은 오히려 물이 표면에 완전히 퍼져 자가정화 효과를 제공합니다. 물이 스스로 오염물질을 씻어내는 구조입니다.</p>
+      <h3>초친수(超親水) 코팅 기술</h3>
+      <p>오염물이 쉽게 씻겨 나가는 초친수(超親水) 코팅 기술 적용으로, 물이 표면에 완전히 퍼져 자가정화 효과를 제공합니다. 물이 스스로 오염물질을 씻어내는 구조로 무세제 완벽 세척이 가능합니다.</p>
       
       <p>이러한 혁신적인 기술로 ORBIO는 업계를 선도하고 있습니다.</p>
     `,
@@ -154,19 +154,19 @@ export const mockBlogPosts: BlogPost[] = [
 export const brandValues = [
   {
     title: '위생',
-    description: '99.99% 이상의 각종 유해균, 오염물로부터 안전하게 보호합니다.',
+    description: '99.999% 이상의 강력한 항균 효과로 각종 유해균, 오염물로부터 안전하게 보호합니다.',
     icon: 'shield-virus',
     color: 'from-blue-500 to-blue-600'
   },
   {
     title: '편의',
-    description: '첨단 초친수 코팅 기술로 간편하게 세척할 수 있습니다.',
+    description: '오염물이 쉽게 씻겨 나가는 초친수(超親水) 코팅 기술로 간편하게 세척할 수 있습니다.',
     icon: 'droplet',
     color: 'from-green-500 to-green-600'
   },
   {
     title: '친환경',
-    description: '세제와 화학적 잔류물이 남지 않는 친환경 세정, 지구 환경까지 생각합니다.',
+    description: '무세제/물 절감으로 세제와 화학적 잔류물이 남지 않는 친환경 세정, 지구 환경까지 생각합니다.',
     icon: 'leaf',
     color: 'from-emerald-500 to-emerald-600'
   },
