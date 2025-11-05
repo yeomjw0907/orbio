@@ -17,27 +17,44 @@ export const ProductsPage: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 제품 로딩 함수
+  // 제품 정렬 함수 메모이제이션
+  const sortProductsByCapacity = useCallback((products: Product[]) => {
+    return products.sort((a, b) => {
+      const capacityA = parseInt(a.specifications?.capacity?.replace('ml', '') || '0');
+      const capacityB = parseInt(b.specifications?.capacity?.replace('ml', '') || '0');
+      return capacityA - capacityB;
+    });
+  }, []);
+
+  // 제품 로딩 함수 메모이제이션
   const loadProducts = useCallback(async () => {
     try {
       setLoading(true);
+      console.log('🔄 제품 데이터 로딩 시작...');
       const data = await productApi.getAll();
+      console.log('📊 Supabase에서 받은 데이터:', data);
       
       if (data && data.length > 0) {
-        setProducts(data);
+        const sortedData = sortProductsByCapacity(data);
+        setProducts(sortedData);
         setDataSource('supabase');
+        console.log('✅ Supabase 데이터 사용:', sortedData);
       } else {
-        setProducts(mockProducts);
+        const sortedMock = sortProductsByCapacity(mockProducts);
+        setProducts(sortedMock);
         setDataSource('mock');
+        console.log('⚠️ Supabase 데이터 부족, Mock 데이터 사용:', sortedMock);
       }
     } catch (error) {
       console.error('❌ 제품 로딩 실패:', error);
-      setProducts(mockProducts);
+      const sortedMock = sortProductsByCapacity(mockProducts);
+      setProducts(sortedMock);
       setDataSource('mock');
+      console.log('🔄 에러로 인해 Mock 데이터 사용:', sortedMock);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [sortProductsByCapacity]);
 
   useEffect(() => {
     loadProducts();
