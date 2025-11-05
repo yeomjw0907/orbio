@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faCheckCircle, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faCheckCircle, faShoppingCart, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { Product } from '../../types';
 
@@ -16,6 +16,26 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   isOpen,
   onClose
 }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // 제품 이미지 배열 (메인 이미지 + 모델컷 등)
+  const productImages = product ? [
+    product.image || '/images/products/default.jpg',
+    // 추가 이미지들 (나중에 product.images 배열로 확장 가능)
+    '/images/products/model-cut-1.jpg',
+    '/images/products/model-cut-2.jpg'
+  ] : [];
+
+  // 다음 이미지로 이동
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % productImages.length);
+  };
+
+  // 이전 이미지로 이동
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + productImages.length) % productImages.length);
+  };
+
   // ESC 키로 모달 닫기
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -27,6 +47,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
       document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+      // 모달이 열릴 때 이미지 인덱스 초기화
+      setCurrentImageIndex(0);
     }
 
     return () => {
@@ -71,34 +93,80 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   <FontAwesomeIcon icon={faTimes} className="text-lg" />
                 </button>
                 
-                <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                    <div className="text-4xl text-white font-bold">
-                      {product.specifications.capacity || 'ORBIO'}
-                    </div>
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-white mb-1">
-                      {product.name}
-                    </h2>
-                    <p className="text-blue-100 text-sm">
-                      {product.category === 'easy-clean' ? 'Easy-Clean 시리즈' : 
-                       product.category === 'antimicrobial' ? '항균 시리즈' : 
-                       '친환경 시리즈'}
-                    </p>
-                  </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-white mb-1">
+                    {product.name}
+                  </h2>
+                  <p className="text-blue-100 text-sm">
+                    {product.category === 'easy-clean' ? 'Easy-Clean 시리즈' : 
+                     product.category === 'antimicrobial' ? '항균 시리즈' : 
+                     '친환경 시리즈'}
+                  </p>
                 </div>
               </div>
 
               {/* 모달 본문 */}
               <div className="overflow-y-auto flex-1 min-h-0">
                 <div className="p-6 space-y-6">
-                  {/* 제품 이미지/아이콘 영역 */}
-                  <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-2xl p-8 flex items-center justify-center">
-                    <div className="w-48 h-48 bg-white rounded-3xl flex items-center justify-center shadow-xl border-4 border-white/50">
-                      <div className="text-8xl text-blue-600">
-                        🍵
-                      </div>
+                  {/* 제품 이미지 슬라이드 */}
+                  <div className="relative bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-2xl overflow-hidden">
+                    <div className="relative h-96 flex items-center justify-center">
+                      <AnimatePresence mode="wait">
+                        <motion.img
+                          key={currentImageIndex}
+                          src={productImages[currentImageIndex]}
+                          alt={`${product.name} - 이미지 ${currentImageIndex + 1}`}
+                          initial={{ opacity: 0, x: 50 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -50 }}
+                          transition={{ duration: 0.3 }}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            // 이미지 로드 실패 시 기본 이미지 표시
+                            e.currentTarget.src = '/images/products/default.jpg';
+                          }}
+                        />
+                      </AnimatePresence>
+
+                      {/* 이전 버튼 */}
+                      {productImages.length > 1 && (
+                        <button
+                          onClick={prevImage}
+                          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
+                          aria-label="이전 이미지"
+                        >
+                          <FontAwesomeIcon icon={faChevronLeft} className="text-gray-700 text-lg" />
+                        </button>
+                      )}
+
+                      {/* 다음 버튼 */}
+                      {productImages.length > 1 && (
+                        <button
+                          onClick={nextImage}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
+                          aria-label="다음 이미지"
+                        >
+                          <FontAwesomeIcon icon={faChevronRight} className="text-gray-700 text-lg" />
+                        </button>
+                      )}
+
+                      {/* 인디케이터 */}
+                      {productImages.length > 1 && (
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                          {productImages.map((_, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setCurrentImageIndex(index)}
+                              className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                                index === currentImageIndex
+                                  ? 'bg-white w-8'
+                                  : 'bg-white/50 hover:bg-white/75'
+                              }`}
+                              aria-label={`이미지 ${index + 1}로 이동`}
+                            />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
 
