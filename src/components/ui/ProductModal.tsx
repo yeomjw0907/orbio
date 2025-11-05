@@ -52,13 +52,13 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           />
           
           {/* 모달 컨텐츠 */}
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pt-8 pb-8 pointer-events-none overflow-y-auto">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 py-12 pointer-events-none">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-hidden pointer-events-auto flex flex-col"
+              className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[calc(100vh-6rem)] overflow-hidden pointer-events-auto flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* 모달 헤더 */}

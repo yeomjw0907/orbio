@@ -429,7 +429,7 @@ export const HomePage: React.FC = () => {
                   link.download = 'ORBIO-Company-Introduction.pdf';
                   link.click();
                 }}
-                className="bg-gradient-to-r from-orbio-blue to-orbio-green hover:from-orbio-blue-600 hover:to-orbio-green-600 text-white px-8 sm:px-12 py-3 sm:py-4 text-base sm:text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-8 sm:px-12 py-3 sm:py-4 text-base sm:text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
               >
                 소개서 다운로드
               </motion.button>

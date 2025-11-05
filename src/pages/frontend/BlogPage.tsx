@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { blogApi, subscriptionApi } from '../../lib/api';
 import { BlogPost } from '../../types';
 import { WaterDropLoading, Button, Input } from '../../components/ui';
+import { mockBlogPosts } from '../../data';
 
 export const BlogPage: React.FC = () => {
   const [selectedTag, setSelectedTag] = useState<string>('all');
@@ -21,10 +22,16 @@ export const BlogPage: React.FC = () => {
     const loadBlogPosts = async () => {
       try {
         const data = await blogApi.getAll();
-        setBlogPosts(data);
+        if (data && data.length > 0) {
+          setBlogPosts(data);
+        } else {
+          // 데이터가 없으면 mock 데이터 사용
+          setBlogPosts(mockBlogPosts);
+        }
       } catch (error) {
         console.error('블로그 포스트 로딩 실패:', error);
-        setBlogPosts([]);
+        // 에러 발생 시 mock 데이터 사용
+        setBlogPosts(mockBlogPosts);
       } finally {
         setLoading(false);
       }
