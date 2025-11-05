@@ -5,7 +5,7 @@ export const mockProducts: Product[] = [
     id: '1',
     name: 'ORBIO Easy-Clean 텀블러 350ml',
     description: '혁신적인 초친수 코팅 기술로 물만으로도 완벽하게 세척되는 텀블러입니다. 시간이 지나도 색이 변하지 않는 견고한 내구성으로 깨끗한 수분 섭취가 가능합니다. 컴팩트한 사이즈로 언제 어디서나 편리하게 사용하세요.',
-    price: 25000,
+    price: 55000,
     category: 'easy-clean',
     image: '/images/products/tumbler-350ml.jpg',
     features: [
@@ -27,7 +27,7 @@ export const mockProducts: Product[] = [
     id: '2',
     name: 'ORBIO Easy-Clean 텀블러 500ml',
     description: '혁신적인 초친수 코팅 기술로 물만으로도 완벽하게 세척되는 텀블러입니다. 시간이 지나도 색이 변하지 않는 견고한 내구성과 높은 표면경도로 스크래치에 강하며, 세정이 용이한 디자인입니다. 항상 깨끗한 수분 섭취가 가능합니다.',
-    price: 30000,
+    price: 60000,
     category: 'easy-clean',
     image: '/images/products/tumbler-500ml.jpg',
     features: [
@@ -49,7 +49,7 @@ export const mockProducts: Product[] = [
     id: '3',
     name: 'ORBIO Easy-Clean 텀블러 750ml',
     description: '혁신적인 초친수 코팅으로 물만으로도 완벽하게 세척되는 대용량 텀블러입니다. 시간이 지나도 색이 변하지 않는 견고한 내구성과 높은 표면경도로 스크래치 방지와 세정 용이성을 동시에 제공합니다. 깨끗한 수분 섭취가 가능합니다.',
-    price: 35000,
+    price: 70000,
     category: 'easy-clean',
     image: '/images/products/tumbler-750ml.jpg',
     features: [
@@ -115,7 +115,7 @@ export const mockBlogPosts: BlogPost[] = [
         <li>탄소 발자국 최소화</li>
       </ul>
       
-      <p>ORBIO 제품을 사용하면 세제 없이도 완벽하게 세척되어 환경 부담을 줄이면서도 최고의 세척력을 경험할 수 있습니다.</p>
+      <p>ORBIO 제품을 사용하면 물로만 행궈도 완벽하게 세척되어 환경 부담을 줄이면서도 최고의 세척력을 경험할 수 있습니다.</p>
     `,
     excerpt: '무세제로 더 깨끗하게. ORBIO와 함께 환경을 생각하는 친환경 라이프스타일을 시작해보세요.',
     author: 'ORBIO 마케팅 팀',

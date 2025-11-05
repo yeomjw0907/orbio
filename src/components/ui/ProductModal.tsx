@@ -52,17 +52,17 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           />
           
           {/* 모달 컨텐츠 */}
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pt-8 pb-8 pointer-events-none overflow-y-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden pointer-events-auto"
+              className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-hidden pointer-events-auto flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* 모달 헤더 */}
-              <div className="relative bg-gradient-to-r from-blue-600 to-blue-700 p-6">
+              <div className="relative bg-gradient-to-r from-blue-600 to-blue-700 p-6 flex-shrink-0">
                 <button
                   onClick={onClose}
                   className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-white/20 hover:bg-white/30 rounded-full text-white transition-all duration-200 hover:scale-110"
@@ -91,7 +91,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               </div>
 
               {/* 모달 본문 */}
-              <div className="overflow-y-auto max-h-[calc(90vh-200px)]">
+              <div className="overflow-y-auto flex-1 min-h-0">
                 <div className="p-6 space-y-6">
                   {/* 제품 이미지/아이콘 영역 */}
                   <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-2xl p-8 flex items-center justify-center">
@@ -193,7 +193,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               </div>
 
               {/* 모달 푸터 - 구매하러 가기 버튼 */}
-              <div className="border-t border-gray-200 p-6 bg-gray-50">
+              <div className="border-t border-gray-200 p-6 bg-gray-50 flex-shrink-0">
                 <div className="flex gap-4">
                   <button
                     onClick={onClose}
